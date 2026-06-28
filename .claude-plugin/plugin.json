@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "based-claude",
+  "displayName": "Based Claude",
+  "version": "0.1.0",
+  "description": "Research-grounded Claude Code workflow for production software work: disciplined context loading, scoped implementation, validation, review, safety, memory, and handoff.",
+  "author": {
+    "name": "MAS Research Knowledgebase"
+  },
+  "license": "MIT",
+  "keywords": [
+    "coding-agents",
+    "production-engineering",
+    "validation",
+    "agent-memory",
+    "claude-code"
+  ],
+  "defaultEnabled": true
+}

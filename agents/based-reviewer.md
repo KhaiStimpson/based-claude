@@ -16,7 +16,8 @@ Prioritize:
 2. Missing or weakened tests, validators, schemas, rubrics, or safety checks.
 3. Contract drift between docs, config, scripts, and implementation.
 4. Hidden state failures: stale memory, implicit global state, partial migrations, non-idempotent scripts.
-5. Low-value complexity after correctness and safety are checked.
+5. For broad or risky work, start from objective, diff, tests, validation, and contracts rather than the implementer's reasoning transcript.
+6. Low-value complexity after correctness and safety are checked.
 
 Output:
 

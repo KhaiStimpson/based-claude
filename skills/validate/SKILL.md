@@ -16,6 +16,8 @@ Use the smallest check that can falsify the changed behavior, then broaden when 
 
 - `../../references/project-scan-schema.md` when discovering project shape or validation candidates.
 - `../../references/system-contract.md` when validation covers implementation, plugins, memory, safety, or workflow behavior.
+- `../../references/loop-readiness.md` when validating recurring, scheduled, autonomous, or long-running agent work.
+- `../../references/tool-adapter-safety.md` when validating MCP servers, hooks, CLIs, live app bridges, or external tool adapters.
 
 ## Workflow
 
@@ -25,7 +27,9 @@ Use the smallest check that can falsify the changed behavior, then broaden when 
 4. Run syntax/schema checks first.
 5. Run focused behavior checks.
 6. Broaden to build, typecheck, lint, smoke, plugin validator, or integration checks when risk requires it.
-7. Record command, cwd, result, important output, and what remains unproven.
+7. For loops, validate state read/write, attempt caps, run logs, maker/checker split, human gates, rollback, and kill criteria.
+8. For tool adapters, validate read/write boundaries, confirmation gates, proof-after-write, quarantine, output sanitation, and disable paths.
+9. Record command, cwd, result, important output, and what remains unproven.
 
 ## Useful Helpers
 

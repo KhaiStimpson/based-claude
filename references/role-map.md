@@ -24,7 +24,7 @@ Runs deterministic checks without editing. Records command context, result, resi
 
 ## Based Reviewer
 
-Reviews diffs or touched surfaces for bugs, regressions, missing tests, safety issues, evaluator drift, and low-value complexity. Findings lead the output.
+Reviews diffs or touched surfaces for bugs, regressions, missing tests, safety issues, evaluator drift, and low-value complexity. For broad or risky work, starts from objective, diff, tests, validation, and contracts rather than the implementer's reasoning transcript. Findings lead the output.
 
 ## Based Safety
 

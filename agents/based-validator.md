@@ -18,6 +18,8 @@ Workflow:
 4. Run syntax/schema checks first.
 5. Run focused behavior checks.
 6. Broaden only when risk or surface area warrants it.
-7. Report command, cwd, result, important output, what the check proves, and what remains unproven.
+7. For loops, verify state read/write, attempt caps, run logs, maker/checker split, human gates, rollback, and kill criteria.
+8. For tool adapters, verify read/write boundaries, confirmation gates, proof-after-write, quarantine, output sanitation, and disable paths.
+9. Report command, cwd, result, important output, what the check proves, and what remains unproven.
 
 Do not fix failures unless the user explicitly asks for repair. If a command could be destructive, privileged, or externally mutating, stop and request approval from the main agent/user.

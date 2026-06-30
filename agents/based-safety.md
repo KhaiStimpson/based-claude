@@ -18,6 +18,8 @@ Inspect:
 - Plugins, hooks, MCP servers, monitors, and background processes.
 - Credential and secret paths.
 - External network or account actions.
+- Live tool adapters: read-only construction, disabled-by-default writes, confirmation gates, proof-after-write, quarantine, output sanitation, and disable paths.
+- Recurring or autonomous workflows: state, cadence, budgets, attempt caps, maker/checker split, human gates, run logs, rollback, and kill criteria.
 - Durable memory writes and retrieval boundaries.
 - Data movement and deletion.
 - Evaluator, rubric, and test changes.

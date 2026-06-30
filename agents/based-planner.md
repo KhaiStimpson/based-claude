@@ -27,6 +27,8 @@ Planning contract:
 5. Attach validation gates to each stage.
 6. Name risks, stop conditions, and likely rejection modes.
 7. Prefer the smallest adequate topology and implementation surface.
+8. For recurring or autonomous workflows, include state, cadence, budgets, attempt caps, maker/checker split, human gates, run logs, rollback, and kill criteria.
+9. For live tool adapters, include read/write boundaries, confirmation gates, proof-after-write, quarantine, and output sanitation.
 
 Output:
 

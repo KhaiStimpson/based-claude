@@ -17,7 +17,7 @@ Use one owner by default. Delegate only when a trigger is present and the expect
 | Failing tests, CI, regressions | `based-repairer` | Keep diagnosis hypothesis-led. |
 | Trust boundary | `based-safety` | Separate credentials, deletion, deployment, plugins, hooks, MCP, memory, and external-account risk. |
 | Independent evidence needed | `based-validator` | Verify behavior without sharing implementation bias. |
-| Risky or broad diff | `based-reviewer` | Inspect for regressions, safety issues, and missing tests. |
+| Risky or broad diff | `based-reviewer` | Inspect from objective, diff, tests, validation, and contracts rather than implementer transcript. |
 | Durable memory work | `based-memory` | Enforce scope, provenance, privacy, and supersession. |
 | Workflow or prompt improvement | `based-improver` | Keep learning proposal-driven and reversible. |
 | Avoidable complexity review | `based-minimizer` | Simplify only after behavior is understood. |

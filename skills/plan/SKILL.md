@@ -19,6 +19,8 @@ Use this for planning without editing unless the user explicitly asks planning p
 - `../../references/role-map.md` only when the plan needs subagent roles.
 - `../../references/delegation-policy.md` only when the plan may split ownership or intentionally keep broad/risky work direct.
 - `../../references/validation-ladder.md` before defining validation gates.
+- `../../references/loop-readiness.md` when planning recurring, scheduled, autonomous, or long-running agent work.
+- `../../references/tool-adapter-safety.md` when planning MCP servers, hooks, CLIs, live app bridges, or external tool adapters.
 
 ## Guided Intake
 
@@ -37,7 +39,9 @@ If the user gave enough detail for a conservative plan, skip intake questions an
 5. Include risks, stop conditions, and likely rejection modes.
 6. Prefer the smallest adequate topology and implementation surface.
 7. State whether implementation should be direct or delegated, with compact rationale and return contracts for any delegated work.
-8. Include a workflow trace step only when delegation is planned or broad/risky work stays direct.
+8. For recurring or autonomous workflows, include state, cadence, budgets, attempt caps, maker/checker split, human gates, logs, rollback, and kill criteria.
+9. For live tool adapters, include read/write boundaries, confirmation gates, proof-after-write, quarantine, and log/output sanitation.
+10. Include a workflow trace step only when delegation is planned or broad/risky work stays direct.
 
 ## Output Shape
 

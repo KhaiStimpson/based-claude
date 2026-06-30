@@ -9,7 +9,7 @@ The plugin intentionally avoids always-on hooks, monitors, MCP servers, or autom
 - `skills/` provide slash commands such as `/based-claude:code`, `/based-claude:plan`, `/based-claude:repair`, `/based-claude:validate`, `/based-claude:review`, `/based-claude:safety`, `/based-claude:trace`, `/based-claude:memory`, `/based-claude:improve`, `/based-claude:minimize`, and `/based-claude:handoff`.
 - `agents/` provide focused subagents for exploration, planning, implementation, repair, validation, review, safety, memory curation, self-improvement, and minimization.
 - `bin/` provides no-dependency Node tools that Claude can run from the Bash tool while the plugin is enabled.
-- `references/` stores the canonical research basis, planning intake protocol, role map, delegation policy, delegation evidence appendix, validation ladder, memory schema, safety policy, diagnostic ledger, and handoff template.
+- `references/` stores the canonical research basis, planning intake protocol, role map, delegation policy, delegation evidence appendix, validation ladder, loop readiness checks, tool-adapter safety checks, fresh-review rules, memory schema, safety policy, diagnostic ledger, and handoff template.
 - `settings.json` selects the Based Developer agent when the plugin is enabled.
 
 ## Test Locally
@@ -87,12 +87,14 @@ node based-claude/bin/based-doctor.js
 
 - Single owner first. Subagent roles are used only for context isolation, parallel search, independent review, or trust-boundary separation.
 - Dynamic workflow selection is automatic. The main agent decides whether to work directly or delegate based on task shape, uncertainty, risk, and validation needs.
+- Recurring or autonomous loops must earn autonomy through readiness checks: state, cadence, budgets, attempt caps, maker/checker split, human gates, run logs, rollback, and kill criteria.
 - Workflow tracing is selective. The main agent records a compact `workflow` trace only when delegation happens or when broad/risky work intentionally stays direct.
 - Structured handoffs instead of transcript replay. Return objective, files, decisions, evidence, validation, risks, and next action.
 - Validation starts with executable checks. Semantic review is used after deterministic evidence where possible.
+- Fresh review starts from objective, diff, tests, validation, and contracts rather than the implementer's reasoning transcript.
 - Durable memory is governed. Cards need scope, provenance, supersession, confidence, and retirement conditions.
 - Self-improvement is proposal-driven. Traces can draft memory and improvement candidates, but promotion requires approval, validation, rollback notes, and independent review for evaluator, safety, memory-policy, executable-script, or trust-boundary changes.
-- Safety is an action boundary. Scripts, skills, tool calls, generated tests, and memory writes are treated as artifacts to review, not as authority.
+- Safety is an action boundary. Scripts, skills, tool calls, generated tests, and memory writes are treated as artifacts to review, not as authority. Live tool adapters should prefer read-only construction, disabled-by-default writes, confirmation gates, proof-after-write, quarantine, and sanitized external output.
 - Minimization is guarded. Avoid overproduction, but never remove security controls, data-loss protection, accessibility, explicit requirements, or project-required validation.
 
 ## Validate The Plugin

@@ -17,7 +17,7 @@ Use the smallest check that can genuinely falsify the changed behavior, then bro
    - Instruction-contract compliance, protected surfaces, no weakened tests or evaluators, auditability, handoff completeness.
 
 5. Latent-failure checks.
-   - State transitions, rollback, stale memory, isolation, downstream invariants, hidden coupling, idempotence.
+   - State transitions, rollback, stale memory, loop attempt caps, tool-adapter write gates, isolation, downstream invariants, hidden coupling, idempotence.
 
 6. Independent review.
    - Required for broad, risky, security-sensitive, evaluator-changing, or durable-memory-changing work.
@@ -36,4 +36,3 @@ Record:
 ## Semantic Judgment
 
 Use model or human judgment only after deterministic evidence has been gathered where possible. Semantic verdicts should cite the evidence they inspected and include disagreement or escalation paths for high-risk outcomes.
-

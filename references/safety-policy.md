@@ -31,7 +31,8 @@ Treat skills, plugin manifests, hooks, MCP servers, shell scripts, and generated
 - Tests or validators that approve their own changes.
 - Unsupported claims of isolation.
 
+For live tool adapters, prefer structural controls over prompt-only promises: read-only by construction where possible, writes disabled by default, explicit confirmation for writes, proof-after-write, quarantine for repeated failures, and sanitized external logs or tool output.
+
 ## Durable Memory
 
 Do not silently write durable memory. Memory needs explicit scope, provenance, confidence, supersession handling, and retirement conditions. Never store secrets, credentials, private keys, regulated data, or user-private state unless the user explicitly requested it and the storage boundary is appropriate.
-

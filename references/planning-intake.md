@@ -28,7 +28,7 @@ A complete plan states objective, scope, proposed changes, validation, risks, st
 
 ## Anti-Patterns
 
-- Creating a new command or agent when the existing plan command can host the behavior.
+- Creating a new interview command or agent when the existing plan command can host the intake behavior.
 - Treating guided intake as adversarial review.
 - Loading broad research notes before local facts establish relevance.
 - Delegating because a role exists rather than because it adds independent value.

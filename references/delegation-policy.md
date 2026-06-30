@@ -13,7 +13,7 @@ Use one owner by default. Delegate only when a trigger is present and the expect
 | Trigger | Use | Why |
 | --- | --- | --- |
 | Broad or unfamiliar search | `based-scout` | Isolate read-only context gathering. |
-| Ambiguous design or migration | `based-planner` | Produce compact executable state before edits. |
+| Ambiguous design or migration | `based-planner` | Produce compact executable state before edits, or `.based/plans/**` artifacts when explicitly requested. |
 | Failing tests, CI, regressions | `based-repairer` | Keep diagnosis hypothesis-led. |
 | Trust boundary | `based-safety` | Separate credentials, deletion, deployment, plugins, hooks, MCP, memory, and external-account risk. |
 | Independent evidence needed | `based-validator` | Verify behavior without sharing implementation bias. |

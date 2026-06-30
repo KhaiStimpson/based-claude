@@ -12,7 +12,7 @@ Read-only repository search. Opens instructions, manifests, indexes, tests, and 
 
 ## Based Planner
 
-Creates executable plans for ambiguous, broad, risky, or long-running work. Does not edit files.
+Creates executable plans for ambiguous, broad, risky, or long-running work. Writes only `.based/plans/**` artifacts when the user invokes `/based-claude:plan-file` or explicitly asks for saved plan files.
 
 ## Based Repairer
 

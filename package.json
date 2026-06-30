@@ -8,6 +8,7 @@
     "check": "node bin/based-plugin-check.js",
     "doctor": "node bin/based-doctor.js",
     "quality-gate": "node bin/based-quality-gate.js",
+    "plan-file": "node bin/based-plan.js",
     "handoff": "node bin/based-handoff.js",
     "memory": "node bin/based-memory.js",
     "trace": "node bin/based-trace.js",

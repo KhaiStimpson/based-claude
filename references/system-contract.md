@@ -12,6 +12,7 @@ Use this contract for production-grade coding, documentation, tooling, plugin, w
 
 2. Retrieve context progressively.
    - User request and local instructions.
+   - If provided, a `.based/plans/.../plan.md` entrypoint before linked detail files.
    - Project shape, manifests, package files, config, and existing scripts.
    - Implementation surface, call sites, tests, types, schemas, and migrations.
    - Research references only when they change architecture, validation, memory, safety, or workflow choices.
@@ -61,6 +62,7 @@ At task setup, silently choose the smallest adequate workflow:
 - `validate-only`: validator runs checks and reports evidence, no edits.
 - `diagnostic-repair`: repairer maintains a hypothesis ledger before editing.
 - `safety-gated-direct`: safety classification precedes a scoped direct change.
+- `plan-file`: planner writes `.based/plans/**` artifacts only when explicitly requested.
 - `plan-scout-implement`: planner and optional scout provide compact state before implementation.
 - `plan-safety-implement`: planning plus safety when broad work crosses a trust boundary.
 

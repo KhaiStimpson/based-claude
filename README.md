@@ -6,10 +6,10 @@ The plugin intentionally avoids always-on hooks, monitors, MCP servers, or autom
 
 ## Components
 
-- `skills/` provide slash commands such as `/based-claude:code`, `/based-claude:plan`, `/based-claude:repair`, `/based-claude:validate`, `/based-claude:review`, `/based-claude:safety`, `/based-claude:trace`, `/based-claude:memory`, `/based-claude:improve`, `/based-claude:minimize`, and `/based-claude:handoff`.
+- `skills/` provide slash commands such as `/based-claude:code`, `/based-claude:plan`, `/based-claude:plan-file`, `/based-claude:repair`, `/based-claude:validate`, `/based-claude:review`, `/based-claude:safety`, `/based-claude:trace`, `/based-claude:memory`, `/based-claude:improve`, `/based-claude:minimize`, and `/based-claude:handoff`.
 - `agents/` provide focused subagents for exploration, planning, implementation, repair, validation, review, safety, memory curation, self-improvement, and minimization.
 - `bin/` provides no-dependency Node tools that Claude can run from the Bash tool while the plugin is enabled.
-- `references/` stores the canonical research basis, planning intake protocol, role map, delegation policy, delegation evidence appendix, validation ladder, loop readiness checks, tool-adapter safety checks, fresh-review rules, memory schema, safety policy, diagnostic ledger, and handoff template.
+- `references/` stores the canonical research basis, planning intake protocol, progressive plan artifact contract, role map, delegation policy, delegation evidence appendix, validation ladder, loop readiness checks, tool-adapter safety checks, fresh-review rules, memory schema, safety policy, diagnostic ledger, and handoff template.
 - `settings.json` selects the Based Developer agent when the plugin is enabled.
 
 ## Test Locally
@@ -31,6 +31,7 @@ Use the commands directly when you want a specific operating mode:
 ```text
 /based-claude:code implement the requested change end to end
 /based-claude:plan design the change before editing
+/based-claude:plan-file write a progressive markdown plan bundle for implementation
 /based-claude:repair diagnose and fix this failing test
 /based-claude:validate run the smallest meaningful checks
 /based-claude:review review the diff for bugs and regressions
@@ -50,6 +51,8 @@ For planning, start with the smallest useful prompt:
 
 Add what success looks like and any hard constraints when you know them. The planner may ask a few intent questions, inspect the repository, then ask sharper follow-ups only when the answer changes the plan. There is no separate grill-me command; guided intake lives inside `/based-claude:plan`.
 
+Use `/based-claude:plan-file <goal>` when the output should become markdown files for a developer. It writes an opt-in progressive bundle under `.based/plans/<slug>/` with `plan.md` as the short entrypoint and linked detail files for context, tasks, validation, risks, and handoff. Normal `/based-claude:plan` remains chat-only.
+
 The skills are also discoverable by Claude when the request matches their descriptions.
 
 ## CLI Helpers
@@ -61,6 +64,7 @@ based-doctor
 based-quality-gate
 based-quality-gate --run
 based-quality-gate --run --allow-shell
+based-plan --write --title "auth-refactor" --objective "..." --tasks "..." --validation "npm test"
 based-handoff
 based-handoff --write
 based-trace append --objective "..." --event validation --summary "..." --validation pass
@@ -88,6 +92,7 @@ node based-claude/bin/based-doctor.js
 - Single owner first. Subagent roles are used only for context isolation, parallel search, independent review, or trust-boundary separation.
 - Dynamic workflow selection is automatic. The main agent decides whether to work directly or delegate based on task shape, uncertainty, risk, and validation needs.
 - Recurring or autonomous loops must earn autonomy through readiness checks: state, cadence, budgets, attempt caps, maker/checker split, human gates, run logs, rollback, and kill criteria.
+- Plan files are opt-in. `/based-claude:plan-file` writes progressive markdown bundles under `.based/plans/**`; `/based-claude:plan` stays chat-only.
 - Workflow tracing is selective. The main agent records a compact `workflow` trace only when delegation happens or when broad/risky work intentionally stays direct.
 - Structured handoffs instead of transcript replay. Return objective, files, decisions, evidence, validation, risks, and next action.
 - Validation starts with executable checks. Semantic review is used after deterministic evidence where possible.

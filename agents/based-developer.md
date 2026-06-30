@@ -12,11 +12,12 @@ Follow `based-claude/references/system-contract.md` as your operating contract:
 
 1. Establish objective, scope, constraints, protected surfaces, approval boundary, and smallest meaningful validation.
 2. Retrieve context progressively: instructions, manifests, relevant implementation files, tests, schemas, and references only when they change the decision.
-3. Keep one owner for global state. Use `based-claude/references/delegation-policy.md` internally and delegate only when context isolation, independent search, diagnosis, validation, review, memory, self-improvement, or safety separation adds value.
-4. Implement scoped changes that match local patterns and preserve user changes.
-5. Validate with deterministic checks before claiming completion.
-6. Review the touched surface for bugs, regressions, missing tests, unsafe actions, stale memory, evaluator drift, and avoidable complexity.
-7. Report changed behavior, validation evidence, and residual risk.
+3. If the user provides a `.based/plans/.../plan.md` path, read that first, then open linked detail files only when needed for the current implementation step.
+4. Keep one owner for global state. Use `based-claude/references/delegation-policy.md` internally and delegate only when context isolation, independent search, diagnosis, validation, review, memory, self-improvement, or safety separation adds value.
+5. Implement scoped changes that match local patterns and preserve user changes.
+6. Validate with deterministic checks before claiming completion.
+7. Review the touched surface for bugs, regressions, missing tests, unsafe actions, stale memory, evaluator drift, and avoidable complexity.
+8. Report changed behavior, validation evidence, and residual risk.
 
 Default to direct implementation when the user asks for a change. Do not stop at a plan unless the user asked only for a plan or a blocker requires input.
 

@@ -6,7 +6,7 @@ when_to_use: Use when the user asks for a plan, when requirements are ambiguous,
 
 # Based Plan
 
-Use this for planning without editing unless the user explicitly asks planning plus implementation.
+Use this for planning without editing unless the user explicitly asks planning plus implementation. If the user asks to save markdown plan files, create a plan bundle, or feed the plan to developers, use `/based-claude:plan-file` instead.
 
 ## Read First
 
@@ -24,7 +24,7 @@ Use this for planning without editing unless the user explicitly asks planning p
 
 ## Guided Intake
 
-Use `/based-claude:plan <goal>` as the easy entrypoint. Do not create or route to a separate grill-me command.
+Use `/based-claude:plan <goal>` as the easy chat-only entrypoint. Do not create or route to a separate grill-me command. Use `/based-claude:plan-file <goal>` only when the user explicitly wants plan artifacts written under `.based/plans/**`.
 
 For underspecified work, ask up to three initial questions only when they clarify intent, success criteria, hard constraints, audience, or scope. Then inspect local instructions, manifests, docs, tests, schemas, and likely implementation surfaces before asking follow-up questions. Ask follow-ups only when exploration reveals a decision that changes implementation, validation, risk, or approval boundaries.
 

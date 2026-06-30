@@ -16,6 +16,7 @@ Use this as a lightweight project orientation.
 4. Pick the next mode:
    - `code` for implementation.
    - `plan` for broad or ambiguous work.
+   - `plan-file` for opt-in markdown plan bundles under `.based/plans/**`.
    - `repair` for failures.
    - `validate` for checks.
    - `review` for diff inspection.

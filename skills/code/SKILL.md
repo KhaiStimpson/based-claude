@@ -27,6 +27,7 @@ Use this as the default implementation workflow.
    - Name likely rejection modes before broad edits: incorrect implementation, failing tests, missing context, unsafe state, evaluator weakening, or low-value complexity.
 
 2. Retrieve context progressively.
+   - If the user provides a `.based/plans/.../plan.md` path, read that first and open linked detail files only when needed.
    - Read local instructions and manifests first.
    - Use fast search before broad file reads.
    - Open only implementation, test, schema, config, and reference files that affect the decision.

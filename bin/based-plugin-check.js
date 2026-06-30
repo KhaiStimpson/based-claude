@@ -123,6 +123,7 @@ const requiredRefs = [
   "safety-policy.md",
   "memory-card-schema.md",
   "handoff-template.md",
+  "plan-artifact.md",
   "diagnostic-ledger.md",
   "project-scan-schema.md",
   "delegation-policy.md",
@@ -206,6 +207,7 @@ for (const script of [
   "_lib.js",
   "based-doctor.js",
   "based-quality-gate.js",
+  "based-plan.js",
   "based-handoff.js",
   "based-memory.js",
   "based-trace.js",
@@ -232,7 +234,7 @@ for (const script of ["based-quality-gate.js", "based-improve.js"]) {
 }
 
 const readme = readText(path.join(root, "README.md"));
-for (const token of ["based-doctor", "based-quality-gate", "based-memory", "based-trace", "based-improve", "/based-claude:code"]) {
+for (const token of ["based-doctor", "based-quality-gate", "based-plan", "based-memory", "based-trace", "based-improve", "/based-claude:code", "/based-claude:plan-file"]) {
   if (!readme.includes(token)) warnings.push(`README does not mention ${token}`);
 }
 

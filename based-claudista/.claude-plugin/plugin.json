@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "based-claudista",
+  "displayName": "Based Claudista",
+  "version": "0.1.0",
+  "description": "Claude Code workflow control plane with compact state, loop modes, quality gates, governed memory, and trace-derived improvement.",
+  "author": {
+    "name": "MAS Research Knowledgebase"
+  },
+  "license": "MIT",
+  "keywords": [
+    "claude-code",
+    "coding-agents",
+    "workflow-control",
+    "validation",
+    "agent-memory"
+  ],
+  "defaultEnabled": true
+}

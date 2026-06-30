@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Based Claudista Workflow Run",
+  "type": "object",
+  "required": ["id", "timestamp", "objective", "mode", "status"],
+  "properties": {
+    "id": { "type": "string" },
+    "timestamp": { "type": "string" },
+    "objective": { "type": "string" },
+    "mode": { "type": "string", "enum": ["manual", "L1-report-only", "L2-assisted-fix", "L3-unattended"] },
+    "status": { "type": "string" },
+    "owner": { "type": "string" },
+    "delegates": { "type": "array", "items": { "type": "string" } },
+    "budget": { "type": "object" },
+    "protectedPaths": { "type": "array", "items": { "type": "string" } },
+    "validation": { "type": "array", "items": { "type": "string" } },
+    "humanGates": { "type": "array", "items": { "type": "string" } },
+    "killCriteria": { "type": "array", "items": { "type": "string" } }
+  }
+}

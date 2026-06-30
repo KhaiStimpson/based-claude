@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Based Claudista Memory Card",
+  "type": "object",
+  "required": ["title", "scope", "claim", "provenance", "confidence", "allowed_readers", "retirement_condition"],
+  "properties": {
+    "title": { "type": "string" },
+    "scope": { "type": "string", "enum": ["session", "feature", "repo", "user", "global"] },
+    "claim": { "type": "string" },
+    "provenance": { "type": "array", "items": { "type": "string" } },
+    "writer": { "type": "string" },
+    "created": { "type": "string" },
+    "confidence": { "type": "string", "enum": ["high", "medium", "low"] },
+    "supersedes": { "type": "array", "items": { "type": "string" } },
+    "superseded_by": { "type": "string" },
+    "allowed_readers": { "type": "array", "items": { "type": "string" } },
+    "retirement_condition": { "type": "string" },
+    "leakage_notes": { "type": "string" }
+  }
+}

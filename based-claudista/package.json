@@ -1,0 +1,16 @@
+{
+  "name": "based-claudista",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Claude Code plugin control plane for production software work.",
+  "license": "MIT",
+  "scripts": {
+    "check": "node bin/claudista-check.js",
+    "doctor": "node bin/claudista-doctor.js",
+    "quality-gate": "node bin/claudista-quality-gate.js",
+    "trace": "node bin/claudista-trace.js",
+    "memory": "node bin/claudista-memory.js",
+    "improve": "node bin/claudista-improve.js",
+    "handoff": "node bin/claudista-handoff.js"
+  }
+}

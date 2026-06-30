@@ -1,0 +1,12 @@
+{
+  "name": "based-claudia",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Artifact-first Claude Code plugin for production software workflows.",
+  "license": "MIT",
+  "scripts": {
+    "check": "node bin/based-claudia.js plugin-check",
+    "smoke": "node bin/based-claudia.js smoke",
+    "status": "node bin/based-claudia.js status"
+  }
+}

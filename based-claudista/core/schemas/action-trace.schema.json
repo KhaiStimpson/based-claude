@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Based Claudista Action Trace",
+  "type": "object",
+  "required": ["id", "timestamp", "event", "objective", "summary"],
+  "properties": {
+    "id": { "type": "string" },
+    "timestamp": { "type": "string" },
+    "taskId": { "type": "string" },
+    "event": {
+      "type": "string",
+      "enum": ["note", "workflow", "plan", "edit", "validation", "repair", "review", "safety", "memory", "improvement", "handoff"]
+    },
+    "objective": { "type": "string" },
+    "summary": { "type": "string" },
+    "actor": { "type": "string" },
+    "authority": { "type": "string", "enum": ["allow", "warn", "escalate", "block", ""] },
+    "files": { "type": "array", "items": { "type": "string" } },
+    "commands": { "type": "array", "items": { "type": "string" } },
+    "validation": { "type": "string", "enum": ["pass", "fail", "skipped", ""] },
+    "decisions": { "type": "array", "items": { "type": "string" } },
+    "evidence": { "type": "array", "items": { "type": "string" } },
+    "risks": { "type": "array", "items": { "type": "string" } },
+    "memoryCandidate": { "type": "boolean" },
+    "improvementCandidate": { "type": "boolean" }
+  }
+}

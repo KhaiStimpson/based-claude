@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "based-claudia",
+  "displayName": "Based Claudia",
+  "version": "0.1.0",
+  "description": "Artifact-first Claude Code workflow kernel for planning, implementation, validation, review, handoff, and governed learning.",
+  "author": {
+    "name": "MAS Research Knowledgebase"
+  },
+  "license": "MIT",
+  "keywords": [
+    "coding-agents",
+    "workflow-state",
+    "progressive-disclosure",
+    "validation",
+    "claude-code"
+  ],
+  "defaultEnabled": true
+}

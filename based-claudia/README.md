@@ -75,6 +75,7 @@ based-claudia review write --title "auth-refactor"
 based-claudia handoff write --title "auth-refactor"
 based-claudia trace append --event validation --summary "npm test passed"
 based-claudia memory draft --title "Repo test recipe" --summary "..."
+based-claudia artifact-lint --root .
 based-claudia plugin-check
 ```
 
@@ -89,7 +90,9 @@ node based-claudia/bin/based-claudia.js plugin-check
 - Artifact-first. Durable state lives in small files that can be reopened later.
 - Progressive disclosure. Read `current.md` or `plan.md` first; open linked detail only when needed.
 - Single owner by default. Split work only for independent discovery, validation, review, or safety boundaries.
+- Model and effort assumptions belong in artifacts when they affect outcome, validation, review recall, tool use, or token headroom.
 - Deterministic checks before semantic review. Record commands and residual risk.
+- Reviews discover plausible issues first, then verify, dedupe, rank, and filter.
 - Memory is governed. Learning starts as a draft and needs explicit approval before promotion.
 - Safety is an action boundary. Scripts, generated tests, tools, and external outputs are evidence with limits, not authority.
 

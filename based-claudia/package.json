@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "check": "node bin/based-claudia.js plugin-check",
+    "artifact-lint": "node bin/based-claudia.js artifact-lint",
     "smoke": "node bin/based-claudia.js smoke",
     "status": "node bin/based-claudia.js status"
   }

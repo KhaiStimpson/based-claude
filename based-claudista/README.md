@@ -1,6 +1,6 @@
 # Based Claudista
 
-Based Claudista is a Claude Code plugin built as a workflow control plane instead of a large set of equally important commands. The normal entrypoint is `/based-claudista:work`; it routes the task into direct implementation, planning, repair, validation, review, safety, memory, or improvement behavior from the task shape.
+Based Claudista is a Claude Code plugin built as a workflow control plane instead of a large set of equally important commands. The normal entrypoint is `/based-claudista:work`; it routes the task through discover, plan, act, verify, review, handoff, memory, or improvement phases based on task shape.
 
 The design is grounded in the local MAS Research Wiki: smallest adequate topology, compact action state, deterministic validation before semantic judgment, governed memory, explicit loop modes, and trace-derived improvement with rollback.
 
@@ -54,6 +54,7 @@ node bin/claudista-check.js
 node bin/claudista-doctor.js --root ..
 node bin/claudista-quality-gate.js --root .. --run
 node bin/claudista-trace.js append --root .. --objective "..." --event validation --summary "npm test passed" --validation pass
+node bin/claudista-trace.js append --root .. --objective "..." --event workflow --summary "L2 fix routed" --contribution-role decisive_progress --effort high
 node bin/claudista-memory.js audit --root ..
 node bin/claudista-improve.js suggest --root .. --title "validation routing" --summary "..."
 node bin/claudista-handoff.js --root .. --objective "..."
@@ -77,6 +78,7 @@ claude plugin validate ./based-claudista --strict
 
 - One owner keeps global state and completion criteria.
 - Subagents are used only for context isolation, independent validation, independent review, repair diagnosis, or safety separation.
+- The router records phase, effort, tool-trigger, and contribution-role decisions when they affect cost, recall, safety, or validation.
 - Durable memory is scoped, provenance-bearing, supersedable, and reviewable.
 - Self-improvement is proposal-driven: trace, propose, validate, review, promote, and preserve rollback notes.
 - Guarded minimization removes avoidable complexity only after behavior and validation are understood.

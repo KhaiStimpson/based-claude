@@ -15,6 +15,7 @@ Use this as the default implementation workflow.
 ## Load On Trigger
 
 - `../../references/validation-ladder.md` before selecting or reporting validation.
+- `../../references/model-migration.md` when effort, token headroom, progress updates, literal scope, or tool-use behavior may affect the task.
 - `../../references/role-map.md` only when choosing a subagent role.
 - `../../references/delegation-policy.md` only when task shape is broad, ambiguous, risky, failing, memory-related, self-improving, or likely to need context isolation.
 - `../../references/research-basis.md` only when changing or reviewing architecture, validation policy, memory, safety, self-improvement, or agent workflow rules.

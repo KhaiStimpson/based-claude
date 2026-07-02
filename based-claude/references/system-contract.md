@@ -36,6 +36,7 @@ Use this contract for production-grade coding, documentation, tooling, plugin, w
    - Focused behavior checks second.
    - Broader integration checks when shared contracts or user-facing behavior changed.
    - Process and safety checks for agent systems, plugins, scripts, and memory.
+   - Record model, effort, token-headroom, or tool-trigger assumptions when they materially affect the validation result.
 
 6. Review the touched surface.
    - Look for bugs, regressions, missing tests, unsafe action paths, evaluator weakening, stale memory, tool-trust assumptions, hidden state failures, and low-value complexity.
@@ -52,6 +53,16 @@ Do not perform deployment, destructive git, credential handling, external accoun
 ## Completion Standard
 
 The task is complete when the requested outcome exists, the validation path has been run or clearly blocked, the touched surfaces have been reviewed for obvious regressions, and remaining risks are named.
+
+## Model And Effort Contract
+
+Use `model-migration.md` when model behavior affects the task. Treat effort selection, output-token headroom, literal scope wording, progress-update behavior, and tool-use triggers as runtime contract details.
+
+- Hard coding, repair, broad planning, review, safety, evaluator, memory, script, and trust-boundary changes should use high effort or stronger.
+- Narrow lookup, formatting, and clerical edits can use lower effort when the validation path is simple.
+- Long plans, handoffs, trace summaries, and broad reviews need explicit output headroom.
+- Review mode should discover plausible issues before severity filtering, deduplication, and final acceptance.
+- Tool-heavy workflows must state when tools are required and what evidence confirms the tool result.
 
 ## Dynamic Workflow Selection
 

@@ -26,6 +26,20 @@ Each line is JSON:
   "decisions": [],
   "evidence": [],
   "risks": [],
+  "risk_class": "",
+  "permission_basis": "",
+  "tool_or_adapter": "",
+  "preconditions": [],
+  "postconditions": [],
+  "sandbox": "",
+  "sanitized_inputs": false,
+  "rollback": "",
+  "external_output_policy": "",
+  "model_assumption": "",
+  "effort": "",
+  "token_headroom": "",
+  "tool_trigger": "",
+  "review_stage": "",
   "memoryCandidate": false,
   "improvementCandidate": false
 }
@@ -37,6 +51,7 @@ Each line is JSON:
 - Preserve file paths, command names, validation results, and evidence IDs.
 - Use `workflow` only for delegation decisions or broad/risky direct decisions.
 - Mark memory and improvement candidates explicitly.
+- Use optional risk, permission, adapter, model, effort, and review-stage fields when they explain a workflow decision or validation boundary.
 - Do not place secrets, credentials, private keys, or sensitive private data in traces.
 - Treat traces as evidence with limits. A trace can justify a draft, not automatic promotion.
 
@@ -45,6 +60,7 @@ Each line is JSON:
 ```bash
 based-trace append --objective "..." --event validation --summary "..." --validation pass --commands "npm run check"
 based-trace append --objective "..." --event workflow --summary "mode=plan-scout-implement delegates=based-scout" --decisions "context isolation before edits"
+based-trace append --objective "..." --event review --summary "broad discovery complete" --review-stage discovery --effort high
 based-trace summarize
 based-trace list --limit 10
 ```

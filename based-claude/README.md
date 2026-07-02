@@ -9,7 +9,7 @@ The plugin intentionally avoids always-on hooks, monitors, MCP servers, or autom
 - `skills/` provide slash commands such as `/based-claude:code`, `/based-claude:plan`, `/based-claude:plan-file`, `/based-claude:repair`, `/based-claude:validate`, `/based-claude:review`, `/based-claude:safety`, `/based-claude:trace`, `/based-claude:memory`, `/based-claude:improve`, `/based-claude:minimize`, and `/based-claude:handoff`.
 - `agents/` provide focused subagents for exploration, planning, implementation, repair, validation, review, safety, memory curation, self-improvement, and minimization.
 - `bin/` provides no-dependency Node tools that Claude can run from the Bash tool while the plugin is enabled.
-- `references/` stores the canonical research basis, planning intake protocol, progressive plan artifact contract, role map, delegation policy, delegation evidence appendix, validation ladder, loop readiness checks, tool-adapter safety checks, fresh-review rules, memory schema, safety policy, diagnostic ledger, and handoff template.
+- `references/` stores the canonical research basis, model-migration contract, planning intake protocol, progressive plan artifact contract, role map, delegation policy, delegation evidence appendix, validation ladder, loop readiness checks, tool-adapter safety checks, fresh-review rules, memory schema, safety policy, diagnostic ledger, and handoff template.
 - `settings.json` selects the Based Developer agent when the plugin is enabled.
 
 ## Test Locally
@@ -78,6 +78,7 @@ based-improve evaluate proposal-slug --command "npm run check" --write
 based-improve review proposal-slug --verdict approve --evidence "review artifact or reviewer notes" --write
 based-improve promote proposal-slug --approved
 based-plugin-check
+based-plugin-check --scorecard
 ```
 
 If bare commands are not available in your shell, run the scripts directly:
@@ -96,7 +97,8 @@ node based-claude/bin/based-doctor.js
 - Workflow tracing is selective. The main agent records a compact `workflow` trace only when delegation happens or when broad/risky work intentionally stays direct.
 - Structured handoffs instead of transcript replay. Return objective, files, decisions, evidence, validation, risks, and next action.
 - Validation starts with executable checks. Semantic review is used after deterministic evidence where possible.
-- Fresh review starts from objective, diff, tests, validation, and contracts rather than the implementer's reasoning transcript.
+- Model migration is part of the harness contract. Effort, token headroom, literal scope, progress updates, tool triggers, and review recall are checked when model behavior matters.
+- Fresh review starts from objective, diff, tests, validation, and contracts rather than the implementer's reasoning transcript. Broad reviews discover plausible issues first, then verify, rank, dedupe, and filter.
 - Durable memory is governed. Cards need scope, provenance, supersession, confidence, and retirement conditions.
 - Self-improvement is proposal-driven. Traces can draft memory and improvement candidates, but promotion requires approval, validation, rollback notes, and independent review for evaluator, safety, memory-policy, executable-script, or trust-boundary changes.
 - Safety is an action boundary. Scripts, skills, tool calls, generated tests, and memory writes are treated as artifacts to review, not as authority. Live tool adapters should prefer read-only construction, disabled-by-default writes, confirmation gates, proof-after-write, quarantine, and sanitized external output.
@@ -108,6 +110,7 @@ Run:
 
 ```bash
 node based-claude/bin/based-plugin-check.js
+node based-claude/bin/based-plugin-check.js --scorecard
 ```
 
 If Claude Code is available, also run:

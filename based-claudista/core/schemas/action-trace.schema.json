@@ -21,6 +21,31 @@
     "decisions": { "type": "array", "items": { "type": "string" } },
     "evidence": { "type": "array", "items": { "type": "string" } },
     "risks": { "type": "array", "items": { "type": "string" } },
+    "risk_class": { "type": "string" },
+    "permission_basis": { "type": "string" },
+    "tool_or_adapter": { "type": "string" },
+    "preconditions": { "type": "array", "items": { "type": "string" } },
+    "postconditions": { "type": "array", "items": { "type": "string" } },
+    "sandbox": { "type": "string" },
+    "sanitized_inputs": { "type": "boolean" },
+    "rollback": { "type": "string" },
+    "external_output_policy": { "type": "string" },
+    "model_assumption": { "type": "string" },
+    "effort": { "type": "string", "enum": ["", "low", "medium", "high", "xhigh"] },
+    "token_headroom": { "type": "string" },
+    "tool_trigger": { "type": "string" },
+    "workflow_phase": {
+      "type": "string",
+      "enum": ["", "discover", "plan", "act", "verify", "review", "handoff", "memory", "improve"]
+    },
+    "contribution_role": {
+      "type": "string",
+      "enum": ["", "decisive_progress", "useful_exploration", "no_progress_infrastructure", "regression"]
+    },
+    "review_stage": {
+      "type": "string",
+      "enum": ["", "discovery", "verification", "reporting"]
+    },
     "memoryCandidate": { "type": "boolean" },
     "improvementCandidate": { "type": "boolean" }
   }

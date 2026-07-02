@@ -10,11 +10,22 @@
     "mode": { "type": "string", "enum": ["manual", "L1-report-only", "L2-assisted-fix", "L3-unattended"] },
     "status": { "type": "string" },
     "owner": { "type": "string" },
+    "phase": {
+      "type": "string",
+      "enum": ["discover", "plan", "act", "verify", "review", "handoff", "memory", "improve", ""]
+    },
     "delegates": { "type": "array", "items": { "type": "string" } },
     "budget": { "type": "object" },
+    "modelAssumption": { "type": "string" },
+    "effort": { "type": "string", "enum": ["", "low", "medium", "high", "xhigh"] },
+    "tokenHeadroom": { "type": "string" },
+    "toolTriggers": { "type": "array", "items": { "type": "string" } },
+    "riskClass": { "type": "string" },
+    "permissionBasis": { "type": "string" },
     "protectedPaths": { "type": "array", "items": { "type": "string" } },
     "validation": { "type": "array", "items": { "type": "string" } },
     "humanGates": { "type": "array", "items": { "type": "string" } },
-    "killCriteria": { "type": "array", "items": { "type": "string" } }
+    "killCriteria": { "type": "array", "items": { "type": "string" } },
+    "rollback": { "type": "string" }
   }
 }

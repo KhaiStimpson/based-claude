@@ -76,6 +76,80 @@ function isConditionalReference(line) {
   return /\b(when|only|if|for|before|after|while|unless|on trigger)\b/i.test(line);
 }
 
+function hasFile(relPath) {
+  return fs.existsSync(path.join(root, relPath));
+}
+
+function hasText(relPath, pattern) {
+  return pattern.test(readText(path.join(root, relPath)));
+}
+
+function harnessScorecard() {
+  const rows = [
+    {
+      component: "agent loop",
+      evidence: ["references/system-contract.md", "skills/code/SKILL.md"],
+      ok: hasText("references/system-contract.md", /Dynamic Workflow Selection/) && hasText("skills/code/SKILL.md", /Completion Bar/),
+    },
+    {
+      component: "context delivery",
+      evidence: ["references/system-contract.md", "references/planning-intake.md"],
+      ok: hasText("references/system-contract.md", /Retrieve context progressively/) && hasFile("references/planning-intake.md"),
+    },
+    {
+      component: "tool interface",
+      evidence: ["references/tool-adapter-safety.md"],
+      ok: hasText("references/tool-adapter-safety.md", /confirmation/i) && hasText("references/tool-adapter-safety.md", /proof-after-write/i),
+    },
+    {
+      component: "control mechanism",
+      evidence: ["references/delegation-policy.md", "references/model-migration.md"],
+      ok: hasFile("references/delegation-policy.md") && hasText("references/model-migration.md", /effort/i),
+    },
+    {
+      component: "permissions",
+      evidence: ["references/safety-policy.md"],
+      ok: hasText("references/safety-policy.md", /Action Boundary|approval|credentials/i),
+    },
+    {
+      component: "memory",
+      evidence: ["references/memory-card-schema.md", "bin/based-memory.js"],
+      ok: hasText("references/memory-card-schema.md", /provenance/i) && hasText("bin/based-memory.js", /supersession-reviewed/),
+    },
+    {
+      component: "verification",
+      evidence: ["references/validation-ladder.md", "bin/based-quality-gate.js"],
+      ok: hasText("references/validation-ladder.md", /Syntax and schema/) && hasFile("bin/based-quality-gate.js"),
+    },
+    {
+      component: "observability",
+      evidence: ["references/trace-schema.md", "bin/based-trace.js"],
+      ok: hasText("references/trace-schema.md", /risk_class/) && hasText("bin/based-trace.js", /risk-class/),
+    },
+    {
+      component: "sandboxing",
+      evidence: ["references/tool-adapter-safety.md", "references/safety-policy.md"],
+      ok: hasText("references/tool-adapter-safety.md", /quarantine/i) && hasText("references/safety-policy.md", /supply-chain/i),
+    },
+    {
+      component: "human gates",
+      evidence: ["references/loop-readiness.md", "references/self-improvement-protocol.md"],
+      ok: hasText("references/loop-readiness.md", /human gates/i) && hasText("references/self-improvement-protocol.md", /independent review/i),
+    },
+  ];
+  return rows;
+}
+
+function printHarnessScorecard() {
+  console.log("## Harness Scorecard");
+  console.log("");
+  for (const row of harnessScorecard()) {
+    const status = row.ok ? "ok" : "gap";
+    console.log(`- ${status}: ${row.component} (${row.evidence.join(", ")})`);
+  }
+  console.log("");
+}
+
 function checkFrontmatter(file, required) {
   const text = readText(file);
   const meta = parseFrontmatter(text);
@@ -130,6 +204,7 @@ const requiredRefs = [
   "delegation-evidence.md",
   "trace-schema.md",
   "self-improvement-protocol.md",
+  "model-migration.md",
 ];
 for (const ref of requiredRefs) requireFile(path.join(root, "references", ref), `reference ${ref}`);
 
@@ -251,6 +326,7 @@ console.log("# Based Claude Plugin Check");
 console.log("");
 console.log(`Root: ${root}`);
 console.log("");
+if (args.scorecard || args["harness-scorecard"]) printHarnessScorecard();
 if (errors.length) {
   console.log("## Errors");
   errors.forEach((item) => console.log(`- ${item}`));

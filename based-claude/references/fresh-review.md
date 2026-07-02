@@ -24,4 +24,10 @@ Do not rely on the implementer's reasoning transcript as the primary evidence. I
 
 ## Output Discipline
 
-Findings come first. If there are no findings, name residual risk and the strongest evidence inspected.
+For broad reviews, preserve recall before filtering:
+
+1. Discovery: collect every plausible issue with evidence, confidence, and affected surface.
+2. Verification: deduplicate, reject unsupported items, classify severity, and check validation relevance.
+3. Reporting: findings come first, ordered by severity. If there are no findings, name residual risk and the strongest evidence inspected.
+
+Do not use "only high severity" wording until after discovery, because literal review prompts can hide real lower-severity defects.

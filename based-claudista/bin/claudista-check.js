@@ -79,6 +79,21 @@ for (const schema of ["action-trace.schema.json", "memory-card.schema.json", "wo
   checkJson(path.join(root, "core", "schemas", schema));
 }
 
+const actionTraceSchema = readText(path.join(root, "core", "schemas", "action-trace.schema.json"));
+for (const field of ["risk_class", "permission_basis", "tool_or_adapter", "external_output_policy", "model_assumption", "effort", "workflow_phase", "contribution_role", "review_stage"]) {
+  if (!actionTraceSchema.includes(field)) errors.push(`action-trace.schema.json missing ${field}`);
+}
+
+const workflowRunSchema = readText(path.join(root, "core", "schemas", "workflow-run.schema.json"));
+for (const field of ["phase", "modelAssumption", "effort", "toolTriggers", "humanGates", "rollback"]) {
+  if (!workflowRunSchema.includes(field)) errors.push(`workflow-run.schema.json missing ${field}`);
+}
+
+const routerPolicy = readText(path.join(root, "core", "policies", "workflow-router.md"));
+for (const token of ["discover", "plan", "act", "verify", "review", "handoff", "decisive_progress", "useful_exploration", "regression"]) {
+  if (!routerPolicy.includes(token)) errors.push(`workflow-router.md missing routing token ${token}`);
+}
+
 for (const skill of ["work", "plan", "check", "memory", "improve", "handoff"]) {
   const file = path.join(root, "skills", skill, "SKILL.md");
   requireFile(file, `skill ${skill}`);
@@ -106,6 +121,8 @@ for (const script of [
 ]) {
   requireFile(path.join(root, "bin", script), `script ${script}`);
 }
+
+requireFile(path.join(root, "fixtures", "loop-case", "README.md"), "loop-mode fixture");
 
 const files = walk(root, { maxDepth: 8, maxFiles: 10000 });
 const legacySlashCommand = "/based-" + "claude:";

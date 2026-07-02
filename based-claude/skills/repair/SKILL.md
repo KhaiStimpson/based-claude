@@ -16,6 +16,7 @@ Repair starts with an actionable diagnosis, not a broad rewrite.
 ## Load On Trigger
 
 - `../../references/system-contract.md` before editing after diagnosis.
+- `../../references/model-migration.md` when the failure could involve effort, token limits, tool-use behavior, literal scope, or model migration.
 - `../../references/research-basis.md` only when diagnosing agent workflow, memory, evaluator, or long-horizon failures.
 
 ## Workflow

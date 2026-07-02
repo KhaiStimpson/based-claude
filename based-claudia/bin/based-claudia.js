@@ -154,10 +154,16 @@ function writeCurrentState(projectRoot, options = {}) {
 - Mode: ${options.mode || args.mode || "start"}
 - Owner: ${options.owner || args.owner || "claudia-developer"}
 - Scope: ${options.scope || args.scope || ""}
+- Non-goals: ${options.nonGoals || args["non-goals"] || ""}
+- Model / effort: ${options.model || args.model || ""}${options.effort || args.effort ? ` / ${options.effort || args.effort}` : ""}
+- Token headroom: ${options.tokenHeadroom || args["token-headroom"] || ""}
+- Tool triggers: ${options.toolTriggers || args["tool-triggers"] || ""}
+- Human gates: ${options.humanGates || args["human-gates"] || ""}
 - Approval boundary: ${options.approvals || args.approvals || ""}
 - Next action: ${options.next || args["next-action"] || "Inspect instructions and choose plan or implement."}
 - Blockers: ${options.blockers || args.blockers || "None recorded."}
 - Latest validation: ${options.validation || args.validation || "None recorded."}
+- Evidence: ${options.evidence || args.evidence || "None recorded."}
 - Active artifacts: ${options.artifacts || args.artifacts || "None recorded."}
 
 ## Repository Snapshot
@@ -201,6 +207,21 @@ function writePlan(projectRoot) {
 
 ${bullets(args.scope, "Fill in included and excluded surfaces.")}
 
+## Non-Goals
+
+${bullets(args["non-goals"], "Fill in explicit non-goals and protected surfaces.")}
+
+## Model / Effort
+
+- Model assumption: ${args.model || "Fill in if model behavior matters."}
+- Effort: ${args.effort || "Fill in if effort affects outcome, review, tools, or latency."}
+- Token headroom: ${args["token-headroom"] || "Fill in long-output or trace-heavy risks."}
+- Scope application: ${args["scope-application"] || "Fill in whether instructions apply to one file, all touched files, or the whole surface."}
+
+## Tool Triggers
+
+${bullets(args["tool-triggers"], "Fill in tools that must be used and required post-action evidence.")}
+
 ## Execution Sequence
 
 ${checks(args.tasks || args.changes, "Fill in the first implementation step.")}
@@ -208,6 +229,14 @@ ${checks(args.tasks || args.changes, "Fill in the first implementation step.")}
 ## Validation Summary
 
 ${bullets(args.validation, "Fill in the smallest meaningful validation command.")}
+
+## Falsifying Checks
+
+${bullets(args["falsifying-checks"], "Fill in checks or evidence that would prove the plan wrong.")}
+
+## Human Gates
+
+${bullets(args["human-gates"], "Fill in merge, deploy, delete, credential, external-write, or memory-promotion gates.")}
 
 ## Risks / Stop Conditions
 
@@ -234,6 +263,11 @@ ${bullets(args.assumptions, "Fill in assumptions and inferred facts.")}
 ## Decisions
 
 ${bullets(args.decisions, "Fill in decisions made during planning and why.")}
+
+## Tool And Model Assumptions
+
+${bullets(args["tool-triggers"], "Fill in required tools and post-action evidence.")}
+${bullets(args.model || args.effort || args["token-headroom"], "Fill in model, effort, and token-headroom assumptions if relevant.")}
 `;
   const tasks = `# Tasks
 
@@ -248,6 +282,10 @@ ${bullets(args.files, "Fill in likely files or directories to touch.")}
 ## Acceptance Checks
 
 ${bullets(args.acceptance, "Fill in observable acceptance checks.")}
+
+## Falsifying Checks
+
+${bullets(args["falsifying-checks"], "Fill in checks that would falsify the plan or implementation.")}
 `;
   const validation = `# Validation
 
@@ -258,6 +296,14 @@ ${bullets(args.validation, "Fill in validation commands and expected evidence.")
 ## Evidence To Capture
 
 ${bullets(args.evidence, "Fill in output, screenshots, logs, or review evidence needed for completion.")}
+
+## Tool Triggers
+
+${bullets(args["tool-triggers"], "Fill in tools that must be used and post-action evidence expected.")}
+
+## Falsifying Checks
+
+${bullets(args["falsifying-checks"], "Fill in checks that would prove the work incomplete or wrong.")}
 
 ## Skipped Checks
 
@@ -277,6 +323,10 @@ ${bullets(args["stop-conditions"], "Fill in conditions that should stop work or 
 
 ${bullets(args.approvals, "Fill in actions that require explicit approval.")}
 
+## Human Gates
+
+${bullets(args["human-gates"], "Fill in human review points before irreversible or trust-boundary actions.")}
+
 ## Rollback Notes
 
 ${bullets(args.rollback, "Fill in rollback or recovery notes.")}
@@ -288,6 +338,10 @@ ${bullets(args.rollback, "Fill in rollback or recovery notes.")}
 - Instruction contracts: ${args.instructions || ""}
 - Authority / approval boundary: ${args.approvals || ""}
 - Scope: ${args.scope || ""}
+- Non-goals: ${args["non-goals"] || ""}
+- Model / effort: ${args.model || ""}${args.effort ? ` / ${args.effort}` : ""}
+- Token headroom: ${args["token-headroom"] || ""}
+- Tool triggers: ${args["tool-triggers"] || ""}
 - Current state: Progressive plan bundle created at .based/plans/${slug}/.
 - Active artifacts: .based/plans/${slug}/plan.md
 - Files read: ${args.files || ""}
@@ -317,8 +371,12 @@ function writeValidation(projectRoot) {
 - Command: ${args.command || ""}
 - Result: ${args.result || "skipped"}
 - Working directory: ${args.cwd || projectRoot}
+- Model / effort: ${args.model || ""}${args.effort ? ` / ${args.effort}` : ""}
 - What this proves: ${args.proves || ""}
 - What remains unproven: ${args.unproven || ""}
+- Evidence inspected: ${args.evidence || ""}
+- Falsifying checks: ${args["falsifying-checks"] || ""}
+- Uncertainty: ${args.uncertainty || ""}
 - Attempts: ${args.attempts || "1"}
 - Generated: ${stamp()}
 
@@ -346,7 +404,19 @@ function writeReview(projectRoot) {
 
 ## Findings
 
-${bullets(args.findings, "Fill in findings, ordered by severity.")}
+${bullets(args.findings, "Fill in verified findings, ordered by severity.")}
+
+## Discovery Findings
+
+${bullets(args.discovery || args["discovery-findings"], "Fill in every plausible issue considered before filtering.")}
+
+## Severity / Ranking
+
+${bullets(args.ranking || args.severity, "Fill in severity, confidence, deduplication, and priority decisions.")}
+
+## Unsupported Or Rejected Findings
+
+${bullets(args.rejected || args["rejected-findings"], "Fill in unsupported items and why they were rejected.")}
 
 ## Open Questions
 
@@ -436,6 +506,14 @@ function appendTrace(projectRoot) {
     files: csv(args.files),
     commands: csv(args.commands),
     validation: args.validation || "",
+    risk_class: args["risk-class"] || "",
+    permission_basis: args["permission-basis"] || "",
+    tool_or_adapter: args["tool-or-adapter"] || "",
+    external_output_policy: args["external-output-policy"] || "",
+    model_assumption: args["model-assumption"] || args.model || "",
+    effort: args.effort || "",
+    token_headroom: args["token-headroom"] || "",
+    review_stage: args["review-stage"] || "",
     risks: csv(args.risks),
     nextAction: args["next-action"] || "",
   };
@@ -546,6 +624,72 @@ function pluginCheck(checkRoot = root) {
   return errors.length ? 1 : 0;
 }
 
+function hasText(file, required) {
+  const text = readText(file);
+  return required.every((item) => text.includes(item));
+}
+
+function artifactLint(projectRoot = root) {
+  const lintErrors = [];
+  const lintWarnings = [];
+  const basedDir = path.join(projectRoot, ".based");
+
+  if (!fs.existsSync(basedDir)) {
+    lintWarnings.push(`No .based artifact directory found at ${basedDir}`);
+  }
+
+  const current = path.join(projectRoot, ".based", "state", "current.md");
+  if (fs.existsSync(current) && !hasText(current, ["Objective", "Mode", "Owner", "Scope", "Non-goals", "Model / effort", "Token headroom", "Tool triggers", "Next action", "Latest validation"])) {
+    lintErrors.push(".based/state/current.md is missing one or more required durable-state fields.");
+  }
+
+  const plansRoot = path.join(projectRoot, ".based", "plans");
+  if (fs.existsSync(plansRoot)) {
+    for (const planDir of safeReaddir(plansRoot).filter((entry) => entry.isDirectory())) {
+      const plan = path.join(plansRoot, planDir.name, "plan.md");
+      if (fs.existsSync(plan) && !hasText(plan, ["## Scope", "## Non-Goals", "## Model / Effort", "## Tool Triggers", "## Validation Summary", "## Falsifying Checks", "## Human Gates"])) {
+        lintErrors.push(`${rel(projectRoot, plan)} is missing one or more plan artifact sections.`);
+      }
+    }
+  }
+
+  const reviewsRoot = path.join(projectRoot, ".based", "reviews");
+  if (fs.existsSync(reviewsRoot)) {
+    for (const review of listMarkdown(reviewsRoot)) {
+      if (!hasText(review, ["## Findings", "## Discovery Findings", "## Severity / Ranking", "## Unsupported Or Rejected Findings"])) {
+        lintErrors.push(`${rel(projectRoot, review)} is missing review discovery/filtering sections.`);
+      }
+    }
+  }
+
+  const validationRoot = path.join(projectRoot, ".based", "validation");
+  if (fs.existsSync(validationRoot)) {
+    for (const record of listMarkdown(validationRoot)) {
+      if (!hasText(record, ["Command", "Result", "Model / effort", "Evidence inspected", "Falsifying checks", "What remains unproven"])) {
+        lintErrors.push(`${rel(projectRoot, record)} is missing validation evidence fields.`);
+      }
+    }
+  }
+
+  console.log("# Based Claudia Artifact Lint");
+  console.log("");
+  console.log(`Root: ${projectRoot}`);
+  console.log("");
+  if (lintErrors.length) {
+    console.log("## Errors");
+    lintErrors.forEach((item) => console.log(`- ${item}`));
+    console.log("");
+  }
+  if (lintWarnings.length) {
+    console.log("## Warnings");
+    lintWarnings.forEach((item) => console.log(`- ${item}`));
+    console.log("");
+  }
+  if (!lintErrors.length && !lintWarnings.length) console.log("No artifact issues found.");
+  else if (!lintErrors.length) console.log("No blocking artifact issues found.");
+  return lintErrors.length ? 1 : 0;
+}
+
 function smoke() {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "based-claudia-smoke-"));
   try {
@@ -602,6 +746,7 @@ Usage:
   based-claudia handoff write --title "..."
   based-claudia trace append --event validation --summary "..."
   based-claudia memory draft --title "..." --summary "..."
+  based-claudia artifact-lint [--root .]
   based-claudia plugin-check
   based-claudia smoke
 
@@ -633,6 +778,8 @@ if (command === "help" || args.help) {
   console.log(appendTrace(root));
 } else if (command === "memory" && args._[1] === "draft") {
   console.log(writeMemoryDraft(root));
+} else if (command === "artifact-lint") {
+  exitCode = artifactLint(root);
 } else if (command === "plugin-check") {
   exitCode = pluginCheck(root);
 } else if (command === "smoke") {

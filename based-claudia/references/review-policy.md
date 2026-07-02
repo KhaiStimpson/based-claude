@@ -15,4 +15,10 @@ Review starts from objective, diff or touched surface, tests, validation, and co
 
 ## Output
 
-Findings first, ordered by severity. Include file paths, commands, evidence, residual risk, and clear next action.
+Use three passes for broad or risky work:
+
+1. Discovery: collect plausible bugs, regressions, unsafe paths, missing tests, stale artifacts, evaluator drift, and contract mismatches with evidence and confidence.
+2. Verification: deduplicate, reject unsupported items, classify severity, and check validation relevance.
+3. Reporting: findings first, ordered by severity. Include file paths, commands, evidence, residual risk, and clear next action.
+
+Avoid "only high severity" filters during discovery, because literal review prompts can suppress real lower-severity defects.

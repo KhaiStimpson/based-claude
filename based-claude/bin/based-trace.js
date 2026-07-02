@@ -33,6 +33,20 @@ Append options:
   --decisions "a,b"
   --evidence "a,b"
   --risks "a,b"
+  --risk-class safety|validation|memory|tool|model|low
+  --permission-basis "why this action was allowed"
+  --tool-or-adapter "tool name"
+  --preconditions "a,b"
+  --postconditions "a,b"
+  --sandbox "workspace-write"
+  --sanitized-inputs
+  --rollback "rollback note"
+  --external-output-policy "sanitized excerpt only"
+  --model-assumption "Claude Sonnet 5"
+  --effort low|medium|high|xhigh
+  --token-headroom "large"
+  --tool-trigger "tests required before completion"
+  --review-stage discovery|verification|reporting
   --memory-candidate
   --improvement-candidate
 
@@ -56,6 +70,20 @@ function append() {
     decisions: csv(args.decisions),
     evidence: csv(args.evidence),
     risks: csv(args.risks),
+    risk_class: args["risk-class"] || "",
+    permission_basis: args["permission-basis"] || "",
+    tool_or_adapter: args["tool-or-adapter"] || "",
+    preconditions: csv(args.preconditions),
+    postconditions: csv(args.postconditions),
+    sandbox: args.sandbox || "",
+    sanitized_inputs: Boolean(args["sanitized-inputs"]),
+    rollback: args.rollback || "",
+    external_output_policy: args["external-output-policy"] || "",
+    model_assumption: args["model-assumption"] || "",
+    effort: args.effort || "",
+    token_headroom: args["token-headroom"] || "",
+    tool_trigger: args["tool-trigger"] || "",
+    review_stage: args["review-stage"] || "",
     memoryCandidate: Boolean(args["memory-candidate"]),
     improvementCandidate: Boolean(args["improvement-candidate"]),
   };
@@ -108,4 +136,3 @@ else {
   usage();
   process.exit(1);
 }
-

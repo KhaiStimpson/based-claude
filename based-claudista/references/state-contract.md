@@ -26,6 +26,22 @@ Based Claudista stores action state, not raw conversation.
 - evidence
 - validation
 - risks
+- risk class
+- permission basis
+- tool or adapter
+- preconditions
+- postconditions
+- sandbox
+- sanitized input flag
+- rollback note
+- external output policy
+- model assumption
+- effort
+- token headroom
+- tool trigger
+- workflow phase
+- contribution role
+- review stage
 - blockers
 - next action
 

@@ -15,6 +15,7 @@ Use this for planning without editing unless the user explicitly asks planning p
 ## Load On Trigger
 
 - `../../references/planning-intake.md` when the request is ambiguous, broad, or likely to need user intent discovery.
+- `../../references/model-migration.md` when planning model upgrades, long agentic work, tool-heavy workflows, review harnesses, or effort/token budgets.
 - `../../references/research-basis.md` only when changing or reviewing agent workflow, memory, validation, safety, self-improvement, or orchestration policy.
 - `../../references/role-map.md` only when the plan needs subagent roles.
 - `../../references/delegation-policy.md` only when the plan may split ownership or intentionally keep broad/risky work direct.

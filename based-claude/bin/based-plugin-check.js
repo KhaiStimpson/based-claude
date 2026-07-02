@@ -193,7 +193,6 @@ const requiredRefs = [
   "research-basis.md",
   "system-contract.md",
   "validation-ladder.md",
-  "role-map.md",
   "safety-policy.md",
   "memory-card-schema.md",
   "handoff-template.md",
@@ -201,7 +200,6 @@ const requiredRefs = [
   "diagnostic-ledger.md",
   "project-scan-schema.md",
   "delegation-policy.md",
-  "delegation-evidence.md",
   "trace-schema.md",
   "self-improvement-protocol.md",
   "model-migration.md",
@@ -239,7 +237,7 @@ else {
         warnings.push(`${rel(file)} has ${unconditional.length} unconditional Read First references.`);
       }
       for (const bullet of unconditional) {
-        if (bullet.includes("research-basis.md") || bullet.includes("delegation-evidence.md")) {
+        if (bullet.includes("research-basis.md")) {
           warnings.push(`${rel(file)} loads ${bullet.match(/`([^`]+)`/)?.[1] || "a research appendix"} unconditionally.`);
         }
       }

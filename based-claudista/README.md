@@ -77,7 +77,8 @@ claude plugin validate ./based-claudista --strict
 ## Design Boundaries
 
 - One owner keeps global state and completion criteria.
-- Subagents are used only for context isolation, independent validation, independent review, repair diagnosis, or safety separation.
+- Subagents are used only for context isolation, independent validation, independent review, repair diagnosis, or safety separation. Read-only roles are tool-restricted in frontmatter, not just by prompt.
+- Model routing is defined in `core/policies/workflow-router.md`: inherited Sonnet by default, Haiku for the read-only scout, aliases only.
 - The router records phase, effort, tool-trigger, and contribution-role decisions when they affect cost, recall, safety, or validation.
 - Durable memory is scoped, provenance-bearing, supersedable, and reviewable.
 - Self-improvement is proposal-driven: trace, propose, validate, review, promote, and preserve rollback notes.

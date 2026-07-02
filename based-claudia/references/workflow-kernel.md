@@ -10,4 +10,6 @@ The kernel is the smallest repeatable path from request to validated result:
 6. `handoff`: write compact continuation state.
 7. `learn`: draft governed learning only when evidence supports it.
 
+Kernel steps are operating modes of one owner, not separate agents. Split work only when the host exposes actual subagents and the split adds functional value: independent discovery, validation, review, or safety separation.
+
 The kernel should stay explicit. Do not add hidden background automation, monitors, or automatic durable learning.

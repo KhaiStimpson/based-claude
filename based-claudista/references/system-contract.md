@@ -14,7 +14,7 @@ Based Claudista is a workflow control plane for production software work.
 
 ## Action Boundary
 
-Escalate before deployment, credential handling, destructive git, external account actions, irreversible data movement, or protected-resource writes. Treat tools, scripts, generated tests, retrieved research, and model judgments as evidence with limits.
+Classify consequential actions as `allow`, `warn`, `escalate`, or `block`. Escalate before deployment, credential handling, destructive git, external account actions, irreversible data movement, protected-resource writes, or unattended mutation loops. Treat tools, scripts, generated tests, retrieved research, and model judgments as evidence with limits. Do not weaken tests, validators, rubrics, or safety checks to make work pass.
 
 ## Completion Standard
 

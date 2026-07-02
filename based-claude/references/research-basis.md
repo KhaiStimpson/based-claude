@@ -77,6 +77,19 @@ Production coding agents are not just code-writing prompts. They are tool-using 
 - `wiki/sources/summary-safari-scaling-long-horizon-agentic-fault-attribution-via-active-investigation.md`
 - `wiki/sources/summary-dietrichgebert-ponytail.md`
 
+## Delegation Evidence
+
+Read only when changing, reviewing, or defending delegation and workflow policy.
+
+- `agent-orchestration`: multiple agents only when task structure or trust boundaries justify coordination cost; one owner, compact action state, budgets, simpler baselines.
+- `delegation-intelligence`: delegation is a decision — is it useful, what context moves, who receives it, how is returned evidence integrated; requires explicit rationale and a return contract.
+- `multi-agent-context-isolation`: subagents are primarily context isolation; coordination overhead can erase the benefit.
+- `dynamic-agent-topologies`: runtime topology changes only when decisions are observable and budget-aware.
+- `workflow-optimization`: judge workflow changes by quality, cost, latency, safety, process traces, and simple baselines.
+- `summary-what-should-agents-say-...`: compact action-state transfer beats raw natural-language chatter.
+
+Implications: single-owner default; split for independence, isolation, or trust boundaries rather than role play; transfer action state; make workflow decisions observable through compact traces only when they matter.
+
 ## Evidence Boundaries
 
 The wiki mixes papers, repository ingests, and practitioner guidance. Treat repeated patterns across concept pages as stronger evidence than any single reported benchmark. Treat repository-authored quantitative claims as medium confidence unless reproduced in the target environment.

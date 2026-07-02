@@ -9,7 +9,7 @@ when_to_use: Use when the user asks to validate, review, audit, run checks, insp
 ## Read First
 
 - `../../references/validation-ladder.md`
-- `../../references/system-contract.md`
+- `../../references/system-contract.md` only when not already operating under the claudista-developer contract.
 
 ## Workflow
 

@@ -6,10 +6,10 @@ The plugin intentionally avoids always-on hooks, monitors, MCP servers, or autom
 
 ## Components
 
-- `skills/` provide slash commands such as `/based-claude:code`, `/based-claude:plan`, `/based-claude:plan-file`, `/based-claude:repair`, `/based-claude:validate`, `/based-claude:review`, `/based-claude:safety`, `/based-claude:trace`, `/based-claude:memory`, `/based-claude:improve`, `/based-claude:minimize`, and `/based-claude:handoff`.
-- `agents/` provide focused subagents for exploration, planning, implementation, repair, validation, review, safety, memory curation, self-improvement, and minimization.
+- `skills/` provide slash commands: `/based-claude:start`, `/based-claude:explore`, `/based-claude:code`, `/based-claude:plan`, `/based-claude:plan-file`, `/based-claude:repair`, `/based-claude:validate`, `/based-claude:review`, `/based-claude:safety`, `/based-claude:trace`, `/based-claude:memory`, `/based-claude:improve`, `/based-claude:minimize`, and `/based-claude:handoff`.
+- `agents/` provide focused subagents for exploration, planning, implementation, repair, validation, review, safety, memory curation, self-improvement, and minimization. Model routing: Sonnet by default, Opus for the planner, Haiku for the scout (see `references/model-migration.md`).
 - `bin/` provides no-dependency Node tools that Claude can run from the Bash tool while the plugin is enabled.
-- `references/` stores the canonical research basis, model-migration contract, planning intake protocol, progressive plan artifact contract, role map, delegation policy, delegation evidence appendix, validation ladder, loop readiness checks, tool-adapter safety checks, fresh-review rules, memory schema, safety policy, diagnostic ledger, and handoff template.
+- `references/` stores the canonical research basis (including the delegation evidence appendix), model-migration contract with model routing, planning intake protocol, progressive plan artifact contract, delegation policy and role map, validation ladder, loop readiness checks, tool-adapter safety checks, fresh-review rules, memory schema, safety policy, diagnostic ledger, trace schema, project scan schema, and handoff template.
 - `settings.json` selects the Based Developer agent when the plugin is enabled.
 
 ## Test Locally
@@ -29,6 +29,8 @@ For persistent personal loading without a marketplace, place the plugin folder u
 Use the commands directly when you want a specific operating mode:
 
 ```text
+/based-claude:start orient the project and choose a workflow
+/based-claude:explore gather read-only repository evidence
 /based-claude:code implement the requested change end to end
 /based-claude:plan design the change before editing
 /based-claude:plan-file write a progressive markdown plan bundle for implementation

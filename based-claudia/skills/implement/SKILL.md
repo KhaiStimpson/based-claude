@@ -8,7 +8,7 @@ when_to_use: Use when the user asks to implement, modify, fix, scaffold, automat
 
 ## Read First
 
-- `../../references/system-contract.md`
+- `../../references/system-contract.md` only when not already operating under the claudia-developer contract.
 
 ## Load On Trigger
 

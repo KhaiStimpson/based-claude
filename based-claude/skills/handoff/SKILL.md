@@ -11,7 +11,6 @@ Use structured action state instead of raw transcript replay.
 ## Read First
 
 - `../../references/handoff-template.md`
-- `../../references/system-contract.md`
 
 ## Workflow
 

@@ -8,8 +8,8 @@ when_to_use: Use when the user asks for a plan, when scope is broad, or before c
 
 ## Read First
 
-- `../../references/system-contract.md`
 - `../../references/artifact-spine.md`
+- `../../references/system-contract.md` only when not already operating under the claudia-developer contract.
 
 ## Load On Trigger
 

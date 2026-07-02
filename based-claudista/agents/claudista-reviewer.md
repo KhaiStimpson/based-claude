@@ -1,6 +1,7 @@
 ---
 name: claudista-reviewer
 description: Independent review role for bugs, regressions, missing tests, safety issues, evaluator drift, and avoidable complexity.
+tools: Read, Glob, Grep, Bash
 model: inherit
 effort: high
 color: purple

@@ -8,14 +8,10 @@ when_to_use: Use when the user asks to simplify, reduce over-engineering, shrink
 
 Minimum code is not minimum engineering. Apply this lens only after the behavior and affected path are understood.
 
-## Read First
-
-- `../../references/system-contract.md`
-
 ## Load On Trigger
 
-- `../../references/research-basis.md` only when changing or reviewing minimization policy, agent workflow, validation policy, safety, or memory behavior.
 - `../../references/validation-ladder.md` before selecting or reporting validation.
+- `../../references/research-basis.md` when changing or reviewing minimization policy itself.
 
 ## Minimization Ladder
 

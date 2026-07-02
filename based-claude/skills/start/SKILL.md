@@ -15,6 +15,7 @@ Use this as a lightweight project orientation.
 3. Identify package managers, scripts, tests, and protected surfaces.
 4. Pick the next mode:
    - `code` for implementation.
+   - `explore` for read-only orientation and evidence gathering.
    - `plan` for broad or ambiguous work.
    - `plan-file` for opt-in markdown plan bundles under `.based/plans/**`.
    - `repair` for failures.
@@ -25,6 +26,7 @@ Use this as a lightweight project orientation.
    - `memory` for governed durable memory.
    - `improve` for validated self-improvement proposals.
    - `minimize` for avoidable complexity.
+   - `handoff` for compact continuation state.
 5. State the smallest meaningful validation path before editing.
 
 Do not front-load the full plugin documentation. Load references only when they affect the next decision.

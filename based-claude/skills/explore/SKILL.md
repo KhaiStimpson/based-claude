@@ -11,7 +11,6 @@ Use this for read-only orientation. Do not edit files.
 ## Read First
 
 - `../../references/project-scan-schema.md`
-- `../../references/system-contract.md`
 
 ## Workflow
 

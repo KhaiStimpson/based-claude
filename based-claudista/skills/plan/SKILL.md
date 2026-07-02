@@ -8,8 +8,9 @@ when_to_use: Use when the user asks to plan first or when implementation would b
 
 ## Read First
 
-- `../../references/system-contract.md`
 - `../../references/state-contract.md`
+- `../../core/policies/workflow-router.md` when choosing the workflow mode or delegation shape.
+- `../../references/system-contract.md` only when not already operating under the claudista-developer contract.
 
 ## Load On Trigger
 

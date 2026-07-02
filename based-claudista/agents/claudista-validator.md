@@ -1,6 +1,7 @@
 ---
 name: claudista-validator
 description: Independent validation role that runs deterministic checks and reports evidence without editing.
+tools: Read, Glob, Grep, Bash
 model: inherit
 effort: medium
 color: green

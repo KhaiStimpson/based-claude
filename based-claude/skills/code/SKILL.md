@@ -1,67 +1,30 @@
 ---
 name: code
 description: End-to-end production coding workflow for scoped implementation, docs, tooling, plugin, and workflow changes.
-when_to_use: Use when the user asks Claude to implement, modify, fix, scaffold, automate, or deliver a concrete change rather than only discuss options.
+when_to_use: Use when the user asks Claude to implement, modify, scaffold, automate, apply a known fix, or deliver a concrete change rather than only discuss options.
 ---
 
 # Based Code
 
-Use this as the default implementation workflow.
-
-## Read First
-
-- `../../references/system-contract.md`
+Default implementation workflow. The operating contract is the `based-developer` agent prompt; if running as a different agent, read `../../references/system-contract.md` first.
 
 ## Load On Trigger
 
 - `../../references/validation-ladder.md` before selecting or reporting validation.
-- `../../references/model-migration.md` when effort, token headroom, progress updates, literal scope, or tool-use behavior may affect the task.
-- `../../references/role-map.md` only when choosing a subagent role.
-- `../../references/delegation-policy.md` only when task shape is broad, ambiguous, risky, failing, memory-related, self-improving, or likely to need context isolation.
-- `../../references/research-basis.md` only when changing or reviewing architecture, validation policy, memory, safety, self-improvement, or agent workflow rules.
-- `../../references/handoff-template.md` only for long tasks, delegation, or continuation.
+- `../../references/model-migration.md` when effort, token headroom, literal scope, progress updates, or tool-use behavior may affect the task.
+- `../../references/delegation-policy.md` when task shape is broad, ambiguous, risky, failing, memory-related, self-improving, or likely to need context isolation.
+- `../../references/research-basis.md` when changing workflow, memory, safety, validation, or self-improvement policy.
+- `../../references/handoff-template.md` for long tasks, delegation, or continuation.
 
 ## Workflow
 
-1. Establish the task contract.
-   - Objective, user-visible outcome, instructions, scope, exclusions, protected surfaces, approval boundary, and smallest meaningful validation.
-   - Name likely rejection modes before broad edits: incorrect implementation, failing tests, missing context, unsafe state, evaluator weakening, or low-value complexity.
-
-2. Retrieve context progressively.
-   - If the user provides a `.based/plans/.../plan.md` path, read that first and open linked detail files only when needed.
-   - Read local instructions and manifests first.
-   - Use fast search before broad file reads.
-   - Open only implementation, test, schema, config, and reference files that affect the decision.
-   - Preserve file paths, command names, and artifact IDs so detail can be reopened later.
-
-3. Pick the smallest adequate topology.
-   - Default to direct single-owner work.
-   - Use `based-scout` for independent read-only context gathering.
-   - Use `based-validator`, `based-reviewer`, or `based-safety` when separation adds real value.
-   - Use `based-planner` only when ambiguity or scope would make direct editing brittle.
-   - Use `based-repairer` for failures, regressions, and CI diagnosis.
-   - Use `based-memory` or `based-improver` only when durable memory or self-improvement is explicitly in scope.
-   - Keep route reasoning compact and internal unless the user asks for it.
-   - Record a compact workflow trace only when delegation happens or a broad/risky task intentionally stays direct.
-
-4. Implement scoped changes.
-   - Match local patterns and ownership boundaries.
-   - Prefer existing helpers and standard platform features.
-   - Keep edits reversible and avoid unrelated refactors.
-   - Do not weaken tests, safety checks, validators, rubrics, or policies to make work pass.
-
-5. Validate.
-   - Syntax/schema first.
-   - Focused behavior checks for changed logic.
-   - Broaden to build, typecheck, lint, smoke, or plugin validation when touched surface warrants it.
-   - Record skipped checks and why.
-
-6. Review.
-   - Check the diff or touched surface for regressions, missing tests, unsafe action paths, stale memory, evaluator drift, and unsupported assumptions.
-   - Use `review`, `validate`, `safety`, or `minimize` when the lens is large enough to deserve separation.
-
-7. Report.
-   - Keep it compact: changed behavior/files, validation command and result, residual risk.
+1. Establish the task contract: objective, user-visible outcome, scope, exclusions, protected surfaces, approval boundary, smallest meaningful validation. Before broad edits, name likely rejection modes: incorrect implementation, failing tests, missing context, unsafe state, evaluator weakening, low-value complexity.
+2. Retrieve context progressively. Plan entrypoint first if provided; instructions and manifests before search; open only files that affect the decision; preserve paths, commands, and artifact IDs for later retrieval.
+3. Pick the smallest adequate topology. Default to direct single-owner work; delegate per `delegation-policy.md` when separation adds real value. Record a workflow trace only when delegating or when broad/risky work intentionally stays direct.
+4. Implement scoped changes. Match local patterns, prefer existing helpers and platform features, keep edits reversible, no unrelated refactors. Never weaken tests, safety checks, validators, rubrics, or policies to make work pass.
+5. Validate: syntax/schema first, focused behavior checks for changed logic, then build/typecheck/lint/smoke/plugin validation when the touched surface warrants it. Record skipped checks and why.
+6. Review the diff for regressions, missing tests, unsafe action paths, stale memory, evaluator drift, and unsupported assumptions. Use `review`, `validate`, `safety`, or `minimize` when the lens deserves separation.
+7. Report compactly: changed behavior/files, validation command and result, residual risk.
 
 ## Completion Bar
 
@@ -69,12 +32,4 @@ Do not stop at a plan when implementation is requested. Continue through edits, 
 
 ## Delegation Contract
 
-When delegating, pass only:
-
-- Objective and local scope.
-- Exact files, symbols, commands, or search terms.
-- Expected output and stop condition.
-- Evidence already known.
-- Return contract: outcome, files/artifacts, evidence, validation, uncertainty, risks, next action.
-
-Avoid raw transcript transfer. A subagent return should be short unless evidence requires more.
+When delegating, pass only: objective and local scope; exact files, symbols, commands, or search terms; expected output and stop condition; evidence already known; and the return contract (outcome, files/artifacts, evidence, validation, uncertainty, risks, next action). No raw transcript transfer; returns stay short unless evidence requires more.

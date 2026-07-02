@@ -10,7 +10,6 @@ Default to a code-review stance. Findings lead the response.
 
 ## Read First
 
-- `../../references/system-contract.md`
 - `../../references/validation-ladder.md`
 - `../../references/safety-policy.md` when scripts, tools, plugins, credentials, external systems, or durable state are involved.
 

@@ -8,8 +8,9 @@ when_to_use: Use when starting work, onboarding Based Claudia, or asking what to
 
 ## Read First
 
-- `../../references/system-contract.md`
+- `../../references/workflow-kernel.md`
 - `../../references/artifact-spine.md`
+- `../../references/system-contract.md` only when not already operating under the claudia-developer contract.
 
 ## Workflow
 

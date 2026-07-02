@@ -27,9 +27,8 @@ Use the smallest check that can falsify the changed behavior, then broaden when 
 4. Run syntax/schema checks first.
 5. Run focused behavior checks.
 6. Broaden to build, typecheck, lint, smoke, plugin validator, or integration checks when risk requires it.
-7. For loops, validate state read/write, attempt caps, run logs, maker/checker split, human gates, rollback, and kill criteria.
-8. For tool adapters, validate read/write boundaries, confirmation gates, proof-after-write, quarantine, output sanitation, and disable paths.
-9. Record command, cwd, result, important output, and what remains unproven.
+7. For loops, validate against the loop-readiness contract; for tool adapters, against the tool-adapter-safety controls.
+8. Record command, cwd, result, important output, and what remains unproven.
 
 ## Useful Helpers
 

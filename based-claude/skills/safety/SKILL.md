@@ -24,11 +24,10 @@ Use this as a trust-boundary review. Do not treat prompt instructions as hard is
 1. Inventory the action surfaces: files, commands, plugins, hooks, tools, accounts, network, memory, logs.
 2. Classify each consequential action as allow, warn, escalate, or block pending clarification.
 3. Check for hidden execution, credential paths, broad filesystem/network access, and destructive operations.
-4. For live tool adapters, check read-only construction, disabled-by-default writes, confirmation gates, proof-after-write, quarantine, output sanitation, and disable paths.
-5. For recurring or autonomous work, check state, cadence, budgets, attempt caps, maker/checker split, human gates, run logs, rollback, and kill criteria.
-6. Check whether validation or reviewers are independent from the generator.
-7. Check durable memory for scope, provenance, supersession, privacy, and retirement.
-8. Recommend the smallest control that preserves the user's goal.
+4. For live tool adapters, check the structural controls in `tool-adapter-safety.md`; for recurring or autonomous work, the loop-readiness contract.
+5. Check whether validation or reviewers are independent from the generator.
+6. Check durable memory for scope, provenance, supersession, privacy, and retirement.
+7. Recommend the smallest control that preserves the user's goal.
 
 ## Output
 

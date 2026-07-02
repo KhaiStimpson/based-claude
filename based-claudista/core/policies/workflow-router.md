@@ -24,6 +24,14 @@ Treat routing as a compact state machine:
 - Reusable learning: `verify -> review -> improve` from traces.
 - Durable fact or failure shield: governed memory after validation and approval.
 
+## Model Routing
+
+Use model aliases only; a dated model ID anywhere in this plugin is a bug.
+
+- `inherit` (Claude Sonnet latest by default): owner, repairer, validator, reviewer, and safety roles.
+- `haiku`: `claudista-scout` — cheap read-only orientation; keep scout requests short, literal, and free of judgment calls.
+- Harder reasoning than the inherited model supports is a routing signal: plan first, narrow scope, or flag the tradeoff to the user rather than silently proceeding.
+
 ## Effort And Tool Triggers
 
 - Use lower effort only for narrow lookup, formatting, and known-pattern L1 report-only work.

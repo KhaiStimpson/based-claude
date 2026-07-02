@@ -8,28 +8,24 @@ when_to_use: Use for ordinary software work when the user wants the plugin to ch
 
 ## Read First
 
-- `../../references/system-contract.md`
-- `../../references/validation-ladder.md` before selecting or reporting validation.
+- `../../core/policies/workflow-router.md` — the phase state machine, routing rules, effort/tool triggers, and contribution roles.
+- `../../references/system-contract.md` only when not already operating under the claudista-developer contract.
 
 ## Load On Trigger
 
+- `../../references/validation-ladder.md` before selecting or reporting validation.
 - `../../references/state-contract.md` for long tasks, delegation, loops, handoffs, memory, or improvement.
 - `../../references/loop-modes.md` for recurring or autonomous work.
 - `../../references/memory-governance.md` for durable memory.
 - `../../references/self-improvement.md` for workflow, prompt, script, evaluator, or memory-policy improvements.
+- `../../core/adapters/tool-adapter-contract.md` when exposing or reviewing tool adapters, MCP servers, or hooks.
 - `../../references/research-basis.md` only when architecture, validation, memory, safety, or agent workflow choices matter.
 
 ## Workflow
 
 1. Establish objective, outcome, constraints, protected surfaces, approval boundary, and smallest meaningful validation.
 2. Inspect local instructions and repository shape before deeper reads.
-3. Route internally:
-   - direct work for small scoped changes;
-   - planning for ambiguous or broad work;
-   - repair for failures;
-   - independent validation or review when risk warrants it;
-   - safety gate before trust-boundary actions;
-   - memory or improvement only when explicitly in scope.
+3. Route through the router policy phases; prefer direct work, and gate trust-boundary actions on safety review.
 4. Implement scoped changes when requested.
 5. Validate and review before claiming completion.
 6. Record compact action state when work is broad, delegated, risky, looped, or intended for memory or improvement.

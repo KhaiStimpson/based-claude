@@ -1,7 +1,8 @@
 ---
 name: claudista-scout
 description: Read-only repository orientation role for finding instructions, manifests, relevant files, tests, and validation candidates.
-model: inherit
+tools: Read, Glob, Grep
+model: haiku
 effort: medium
 color: blue
 ---

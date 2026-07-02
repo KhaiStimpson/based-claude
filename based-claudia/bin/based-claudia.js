@@ -559,7 +559,6 @@ function pluginCheck(checkRoot = root) {
     "memory-policy.md",
     "research-basis.md",
     "review-policy.md",
-    "role-map.md",
     "safety-policy.md",
     "system-contract.md",
     "validation-ladder.md",

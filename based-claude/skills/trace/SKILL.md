@@ -26,8 +26,10 @@ Use traces as compact evidence records. Do not dump transcripts.
 
 ## Helper
 
+Invoke as `node "${CLAUDE_PLUGIN_ROOT}/bin/based-trace.js" <action> [args]` so the command resolves regardless of install location.
+
 ```bash
-based-trace append --objective "..." --event validation --summary "..." --validation pass --commands "npm run check"
-based-trace append --objective "..." --event repair --summary "..." --improvement-candidate --evidence "..."
-based-trace summarize
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-trace.js" append --objective "..." --event validation --summary "..." --validation pass --commands "npm run check"
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-trace.js" append --objective "..." --event repair --summary "..." --improvement-candidate --evidence "..."
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-trace.js" summarize
 ```

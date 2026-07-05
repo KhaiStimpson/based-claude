@@ -8,6 +8,14 @@ when_to_use: Use when the user asks to simplify, reduce over-engineering, shrink
 
 Minimum code is not minimum engineering. Apply this lens only after the behavior and affected path are understood.
 
+## Relationship To The Native `/simplify` Skill
+
+Claude Code now bundles `/simplify`, a general reuse/simplification/efficiency pass. Use
+`/simplify` directly for an ordinary cleanup task. Use this skill instead when the
+Non-Negotiables list below matters — `/simplify` has no built-in floor against removing
+security controls, trust-boundary validation, data-loss prevention, accessibility, or
+explicit requirements, which is the entire reason this guarded lens exists.
+
 ## Load On Trigger
 
 - `../../references/validation-ladder.md` before selecting or reporting validation.

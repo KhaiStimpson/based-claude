@@ -16,7 +16,7 @@ File-writing variant of `/based-claude:plan`: same planning contract, intake pol
 
 1. Treat `/based-claude:plan-file <goal>` as explicit permission to write only the plan artifact bundle.
 2. Plan per the `/based-claude:plan` contract (intake, repository inspection, at most one blocking question).
-3. Create `.based/plans/<slug>/` with a compact `plan.md` index and linked detail files. `based-plan --write --title "<short title>"` can scaffold; then fill with task-specific content.
+3. Create `.based/plans/<slug>/` with a compact `plan.md` index and linked detail files. `node "${CLAUDE_PLUGIN_ROOT}/bin/based-plan.js" --write --title "<short title>"` can scaffold; then fill with task-specific content.
 4. End with the generated `plan.md` path and the next developer action.
 
 ## Bundle Contract

@@ -1,8 +1,10 @@
 # Based Claude
 
+> Part of the Based plugin family. The consolidated flagship variant is [based-claudius](../based-claudius/README.md), which merges this plugin's strengths with its siblings' and adds a delivered-code quality contract.
+
 Based Claude is a Claude Code plugin for production-grade software work. It packages the local MAS Research Wiki into a practical developer workflow: progressive context loading, single-owner execution by default, focused subagent roles when isolation helps, deterministic validation before semantic judgment, explicit safety boundaries, governed memory cards, and compact handoffs.
 
-The plugin intentionally avoids always-on hooks, monitors, MCP servers, or automatic writes. Enabling it changes the default Claude Code agent to `based-developer`; every script and durable memory write is opt-in.
+The plugin intentionally avoids always-on hooks, monitors, MCP servers, or automatic writes. Enabling it changes the default Claude Code agent to `based-developer`; every script and durable memory write is opt-in. `references/phase-gates.md` documents optional deterministic hook templates for users who want them — nothing in the plugin installs them automatically.
 
 ## Components
 
@@ -22,7 +24,7 @@ claude --plugin-dir ./based-claude
 
 Then run `/reload-plugins` after edits and try `/based-claude:start`.
 
-For persistent personal loading without a marketplace, place the plugin folder under your personal Claude skills directory as a skills-directory plugin. For shared distribution, publish it through a Claude Code plugin marketplace and install it with `/plugin marketplace add` followed by `/plugin install`.
+For persistent personal loading without a marketplace, place the plugin folder under your personal Claude skills directory as a skills-directory plugin. For shared distribution, this repository ships `.claude-plugin/marketplace.json`: run `/plugin marketplace add KhaiStimpson/based-claude` followed by `/plugin install based-claude`.
 
 ## Day-To-Day Commands
 
@@ -61,34 +63,31 @@ The skills are also discoverable by Claude when the request matches their descri
 
 These helpers are intentionally conservative. They print evidence and suggestions by default; commands that write files or run validation suites require explicit flags.
 
-```bash
-based-doctor
-based-quality-gate
-based-quality-gate --run
-based-quality-gate --run --allow-shell
-based-plan --write --title "auth-refactor" --objective "..." --tasks "..." --validation "npm test"
-based-handoff
-based-handoff --write
-based-trace append --objective "..." --event validation --summary "..." --validation pass
-based-memory audit --strict
-based-memory suggest --write
-based-memory new --title "Repo test recipe" --scope repo --summary "..." --evidence "..."
-based-memory promote repo-test-recipe --approved --supersession-reviewed
-based-memory retrieve --query "test recipe" --scope repo,user
-based-improve suggest --write
-based-improve evaluate proposal-slug --command "npm run check" --write
-based-improve review proposal-slug --verdict approve --evidence "review artifact or reviewer notes" --write
-based-improve promote proposal-slug --approved
-based-plugin-check
-based-plugin-check --scorecard
-```
-
-If bare commands are not available in your shell, run the scripts directly:
+Inside a Claude Code session with the plugin enabled, `bin/` is not on `PATH` — invoke helpers through the plugin-root variable so they resolve regardless of install location:
 
 ```bash
-node based-claude/bin/based-plugin-check.js
-node based-claude/bin/based-doctor.js
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-doctor.js"
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-quality-gate.js"
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-quality-gate.js" --run
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-quality-gate.js" --run --allow-shell
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-plan.js" --write --title "auth-refactor" --objective "..." --tasks "..." --validation "npm test"
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-handoff.js"
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-handoff.js" --write
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-trace.js" append --objective "..." --event validation --summary "..." --validation pass
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-memory.js" audit --strict
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-memory.js" suggest --write
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-memory.js" new --title "Repo test recipe" --scope repo --summary "..." --evidence "..."
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-memory.js" promote repo-test-recipe --approved --supersession-reviewed
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-memory.js" retrieve --query "test recipe" --scope repo,user
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-improve.js" suggest --write
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-improve.js" evaluate proposal-slug --command "npm run check" --write
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-improve.js" review proposal-slug --verdict approve --evidence "review artifact or reviewer notes" --write
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-improve.js" promote proposal-slug --approved
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-plugin-check.js"
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-plugin-check.js" --scorecard
 ```
+
+Local development (this repository root, plugin not installed) or any shell with `based-claude/bin` on `PATH`, or after `npm link` in `based-claude/` (the `package.json` `bin` field maps each short name to its script), can use the shorter form instead: `based-doctor`, `based-quality-gate`, `based-plan`, `based-handoff`, `based-trace`, `based-memory`, `based-improve`, `based-plugin-check` — all skill and agent prompts in this plugin default to the `${CLAUDE_PLUGIN_ROOT}` form because it is the only one guaranteed to work in an installed plugin.
 
 ## Design Choices
 
@@ -108,15 +107,16 @@ node based-claude/bin/based-doctor.js
 
 ## Validate The Plugin
 
-Run:
+Run from this repository root:
 
 ```bash
 node based-claude/bin/based-plugin-check.js
 node based-claude/bin/based-plugin-check.js --scorecard
+npm --prefix based-claude test
 ```
 
 If Claude Code is available, also run:
 
 ```bash
-claude plugin validate ./based-claude --strict
+claude plugin validate ./based-claude
 ```

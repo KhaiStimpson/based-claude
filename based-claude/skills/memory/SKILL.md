@@ -40,13 +40,13 @@ Durable memory is governed data, not a transcript drawer. Prefer no memory over 
 
 ## Helper
 
-Use `based-memory`:
+Use `node "${CLAUDE_PLUGIN_ROOT}/bin/based-memory.js" <action> [args]` so the command resolves regardless of install location:
 
 ```bash
-based-memory audit --strict
-based-memory new --title "..." --scope repo --summary "..." --evidence "..."
-based-memory suggest --write
-based-memory promote card-slug --approved --supersession-reviewed
-based-memory retrieve --query "..." --scope repo,user
-based-memory retire card-slug --approved
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-memory.js" audit --strict
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-memory.js" new --title "..." --scope repo --summary "..." --evidence "..."
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-memory.js" suggest --write
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-memory.js" promote card-slug --approved --supersession-reviewed
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-memory.js" retrieve --query "..." --scope repo,user
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-memory.js" retire card-slug --approved
 ```

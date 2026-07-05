@@ -33,6 +33,14 @@ Record:
 - What the check proves.
 - What remains unproven.
 
+For semantic or judge-based checks, also record when they materially affect the result:
+
+- Judge identity and whether it is independent from the work's generator.
+- Precision/recall or agreement evidence if known, and known disagreement modes (do not treat high pairwise agreement alone as proof of low-skew reliability).
+- Escalation path for a disputed or high-risk verdict.
+
+For test oracles specifically (generated tests, fixtures, or scripted checks that assert expected behavior), decompose the behavior into ordered state transitions where practical and report the first violated transition rather than only pass/fail. Prefer oracles with a named generator and an independent reviewer, a version, known blind spots, and a retirement condition — an oracle that can approve its own change is not independent evidence.
+
 ## Semantic Judgment
 
 Use model or human judgment only after deterministic evidence has been gathered where possible. Semantic verdicts should cite the evidence they inspected and include disagreement or escalation paths for high-risk outcomes.

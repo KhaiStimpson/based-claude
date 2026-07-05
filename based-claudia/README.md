@@ -1,5 +1,7 @@
 # Based Claudia
 
+> Part of the Based plugin family. The consolidated flagship variant is [based-claudius](../based-claudius/README.md), which merges this plugin's strengths with its siblings' and adds a delivered-code quality contract.
+
 Based Claudia is an artifact-first Claude Code plugin for production software work. It keeps the command surface small and makes durable workflow state visible through `.based/**` markdown and JSONL artifacts.
 
 The plugin is intentionally conservative. It does not install hooks, background monitors, MCP servers, or automatic writes. Every durable artifact is created by an explicit command or user request.

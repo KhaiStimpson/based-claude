@@ -26,8 +26,8 @@ Use structured action state instead of raw transcript replay.
 Use:
 
 ```bash
-based-handoff
-based-handoff --write
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-handoff.js"
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-handoff.js" --write
 ```
 
 Keep the handoff short enough for the next worker to act immediately.

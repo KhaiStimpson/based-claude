@@ -43,7 +43,7 @@ Use one owner by default. Delegate only when a trigger is present and the expect
 
 ## Route Trace
 
-Record a compact `based-trace append --event workflow ...` entry only when delegation happens or a broad/risky task intentionally stays `direct`: mode, owner, delegates, reason, expected validation.
+Record a compact `node "${CLAUDE_PLUGIN_ROOT}/bin/based-trace.js" append --event workflow ...` entry only when delegation happens or a broad/risky task intentionally stays `direct`: mode, owner, delegates, reason, expected validation.
 
 ## Return Contract
 

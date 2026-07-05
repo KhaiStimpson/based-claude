@@ -11,7 +11,7 @@ Use this as a lightweight project orientation.
 ## Workflow
 
 1. Read local instructions.
-2. Run or ask to run `based-doctor`.
+2. Run or ask to run `node "${CLAUDE_PLUGIN_ROOT}/bin/based-doctor.js"`.
 3. Identify package managers, scripts, tests, and protected surfaces.
 4. Pick the next mode:
    - `code` for implementation.

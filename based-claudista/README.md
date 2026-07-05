@@ -1,5 +1,7 @@
 # Based Claudista
 
+> Part of the Based plugin family. The consolidated flagship variant is [based-claudius](../based-claudius/README.md), which merges this plugin's strengths with its siblings' and adds a delivered-code quality contract.
+
 Based Claudista is a Claude Code plugin built as a workflow control plane instead of a large set of equally important commands. The normal entrypoint is `/based-claudista:work`; it routes the task through discover, plan, act, verify, review, handoff, memory, or improvement phases based on task shape.
 
 The design is grounded in the local MAS Research Wiki: smallest adequate topology, compact action state, deterministic validation before semantic judgment, governed memory, explicit loop modes, and trace-derived improvement with rollback.

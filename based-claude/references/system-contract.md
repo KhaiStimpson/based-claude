@@ -40,5 +40,14 @@ Delegate only when it saves context, improves independence, or protects a bounda
 When delegation happens, or broad/risky work intentionally stays direct, record one compact route trace:
 
 ```bash
-based-trace append --event workflow --summary "mode=direct owner=based-developer delegates=none" --decisions "broad but single context; validation via npm run check"
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-trace.js" append --event workflow --summary "mode=direct owner=based-developer delegates=none" --decisions "broad but single context; validation via npm run check"
 ```
+
+## Context Survival Across Compaction
+
+Compaction and long sessions can drop detail. Keep critical constraints recoverable:
+
+- Objective, protected surfaces, approval boundary, and the active workflow mode belong in this contract or the invoking skill/agent prompt, not only in conversation turns — they reload every session or delegation and do not depend on what compaction preserves.
+- Volatile task detail (exact files touched, decisions made, evidence gathered, validation run) belongs in action-state artifacts: `handoff-template.md` output, `based-trace` records, or a `.based/plans/**` bundle. These survive compaction as files, not as memory of the conversation.
+- Before a long or delegated task, write a handoff or trace entry rather than relying on the summary compaction produces. Re-read it after compaction or a delegation return instead of assuming prior turns are still available in full.
+- If project memory customizes compaction behavior (for example, "always preserve the full list of modified files and test commands"), treat that as reinforcing this contract, not replacing it.

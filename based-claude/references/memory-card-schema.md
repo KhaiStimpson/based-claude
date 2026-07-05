@@ -81,15 +81,17 @@ Checks that proved it, plus what remains unproven.
 1. Draft from explicit user statements, validated traces, repository evidence, or external references.
 2. Audit schema, scope, sensitivity, confidence, provenance, and duplicate active titles.
 3. Retrieve by scope before applying the card to a task.
-4. Promote only with approval.
-5. Retire or supersede cards when evidence changes.
+4. Promote only with approval. Promotion moves the source draft into `active/`; the draft no longer exists at its original path.
+5. Retire or supersede cards when evidence changes. Retirement moves the source card into `retired/`; it no longer exists in `active/` and stops matching `retrieve`.
+6. Periodically run `audit --recovery` to confirm active cards are actually findable via their own `applies_when` cues, and that no retired or superseded card still sits in `active/`.
 
 ## Commands
 
 ```bash
-based-memory suggest --write
-based-memory promote card-slug --approved --supersession-reviewed
-based-memory retrieve --query "test command" --scope repo,user
-based-memory retire card-slug --approved
-based-memory audit --strict
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-memory.js" suggest --write
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-memory.js" promote card-slug --approved --supersession-reviewed
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-memory.js" retrieve --query "test command" --scope repo,user
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-memory.js" retire card-slug --approved
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-memory.js" audit --strict
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-memory.js" audit --recovery
 ```

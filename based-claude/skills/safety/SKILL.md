@@ -18,10 +18,11 @@ Use this as a trust-boundary review. Do not treat prompt instructions as hard is
 
 - `../../references/tool-adapter-safety.md` when reviewing MCP servers, hooks, CLIs, live app bridges, external APIs, monitoring tools, or generated tool wrappers.
 - `../../references/loop-readiness.md` when reviewing recurring, scheduled, autonomous, or long-running agent work.
+- `../../references/phase-gates.md` when a user asks for a deterministic hook, or when a review finds a critical rule that a prompt instruction cannot reliably enforce.
 
 ## Workflow
 
-1. Inventory the action surfaces: files, commands, plugins, hooks, tools, accounts, network, memory, logs.
+1. Inventory the action surfaces: files, commands, plugins, hooks, tools, accounts, network, memory, logs. For a third-party skill or plugin under intake (not this plugin's own surfaces), enumerate every bundled resource and its capability surface per `safety-policy.md`'s Skill And Plugin Intake section, not just the entrypoint description.
 2. Classify each consequential action as allow, warn, escalate, or block pending clarification.
 3. Check for hidden execution, credential paths, broad filesystem/network access, and destructive operations.
 4. For live tool adapters, check the structural controls in `tool-adapter-safety.md`; for recurring or autonomous work, the loop-readiness contract.

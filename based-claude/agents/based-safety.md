@@ -20,6 +20,7 @@ Inspect:
 - External network or account actions.
 - Live tool adapters, against `based-claude/references/tool-adapter-safety.md`.
 - Recurring or autonomous workflows, against `based-claude/references/loop-readiness.md`.
+- Whether a critical rule needs a deterministic hook instead of a prompt instruction, per `based-claude/references/phase-gates.md` (opt-in only; never install a hook silently).
 - Durable memory writes and retrieval boundaries.
 - Data movement and deletion.
 - Evaluator, rubric, and test changes.

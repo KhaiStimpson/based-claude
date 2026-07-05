@@ -8,6 +8,14 @@ when_to_use: Use when the user asks to validate, test, verify, run checks, inspe
 
 Use the smallest check that can falsify the changed behavior, then broaden when warranted.
 
+## Relationship To The Native `/verify` Skill
+
+Claude Code now bundles `/verify`, which launches and drives the app to observe a change
+working. Use `/verify` for "does this actually run" confirmation on an app. Use this
+skill for the broader validation ladder — syntax/schema, focused behavior, integration,
+process checks, and independent review — especially for non-runnable artifacts like
+plugin structure, memory cards, or workflow files that `/verify` does not target.
+
 ## Read First
 
 - `../../references/validation-ladder.md`
@@ -31,6 +39,8 @@ Use the smallest check that can falsify the changed behavior, then broaden when 
 8. Record command, cwd, result, important output, and what remains unproven.
 
 ## Useful Helpers
+
+Invoke as `node "${CLAUDE_PLUGIN_ROOT}/bin/<name>.js" [args]` so the command resolves regardless of install location.
 
 - `based-doctor` for project shape and validation candidates.
 - `based-quality-gate` for suggested commands.

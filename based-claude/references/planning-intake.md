@@ -9,7 +9,7 @@ Guided intake exists to improve plans, not to create a separate interview workfl
 ## Flow
 
 1. Lock the visible objective, likely user-visible outcome, and any explicit constraints.
-2. Ask up to three initial questions only when they materially clarify intent, success criteria, hard constraints, audience, or scope. Include recommended defaults when possible.
+2. Ask up to three initial questions only when they materially clarify intent, success criteria, hard constraints, audience, or scope. Include recommended defaults when possible. Prefer the `AskUserQuestion` tool with structured options over free-text questions when the choice set is small and known; it is faster for the user to answer and keeps the plan's assumptions explicit.
 3. Inspect local instructions, manifests, docs, tests, schemas, and likely implementation surfaces before asking follow-up questions about discoverable facts.
 4. Ask follow-ups only after exploration reveals a decision that changes implementation, validation, risk, or approval boundaries.
 5. Stop asking when the remaining unknowns can be handled as explicit assumptions in the plan.

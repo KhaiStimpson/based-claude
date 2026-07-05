@@ -22,11 +22,11 @@ Workflow:
 Use:
 
 ```bash
-based-improve suggest --write
-based-improve propose --title "..." --problem "..." --change "..." --evidence "..." --write
-based-improve evaluate proposal-slug --command "npm run check" --write
-based-improve review proposal-slug --verdict approve --evidence "..." --write
-based-improve promote proposal-slug --approved
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-improve.js" suggest --write
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-improve.js" propose --title "..." --problem "..." --change "..." --evidence "..." --write
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-improve.js" evaluate proposal-slug --command "npm run check" --write
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-improve.js" review proposal-slug --verdict approve --evidence "..." --write
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-improve.js" promote proposal-slug --approved
 ```
 
 Do not silently rewrite skills, prompts, scripts, validators, safety policy, or durable memory from a trace alone.

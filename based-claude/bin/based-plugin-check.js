@@ -203,6 +203,7 @@ const requiredRefs = [
   "trace-schema.md",
   "self-improvement-protocol.md",
   "model-migration.md",
+  "phase-gates.md",
 ];
 for (const ref of requiredRefs) requireFile(path.join(root, "references", ref), `reference ${ref}`);
 
@@ -306,18 +307,94 @@ for (const script of ["based-quality-gate.js", "based-improve.js"]) {
   }
 }
 
+// Rule-copy drift check: agent bodies and their matching skill bodies restate the same
+// policy in two places by design. Each pair below pins verbatim phrases that must appear
+// in both files. If a maintainer edits the phrase in only one side, this fails instead of
+// letting the copies silently diverge.
+const ruleCopyPairs = [
+  {
+    label: "repair",
+    fileA: "agents/based-repairer.md",
+    fileB: "skills/repair/SKILL.md",
+    phrases: [
+      "Define the observed failure and expected invariant.",
+      "Build a ranked hypothesis ledger.",
+      "Apply the smallest repair that addresses the root cause.",
+      "Validate the failing path, then broaden if the touched contract is shared.",
+    ],
+  },
+  {
+    label: "review",
+    fileA: "agents/based-reviewer.md",
+    fileB: "skills/review/SKILL.md",
+    phrases: [
+      "Bugs, behavioral regressions, data loss, security flaws, unsafe tool paths.",
+      "Contract drift between docs, config, scripts, and implementation.",
+      "Hidden state failures: stale memory, implicit global state, partial migrations, non-idempotent scripts.",
+    ],
+  },
+  {
+    label: "validate",
+    fileA: "agents/based-validator.md",
+    fileB: "skills/validate/SKILL.md",
+    phrases: [
+      "Prefer repository-defined checks over generic commands.",
+      "Run syntax/schema checks first.",
+      "Run focused behavior checks.",
+    ],
+  },
+  {
+    label: "safety",
+    fileA: "agents/based-safety.md",
+    fileB: "skills/safety/SKILL.md",
+    phrases: ["## Boundary", "## Classification", "- Allow:", "- Warn:", "- Escalate:", "- Block:", "## Required Controls", "## Residual Risk"],
+  },
+  {
+    label: "memory",
+    fileA: "agents/based-memory.md",
+    fileB: "skills/memory/SKILL.md",
+    phrases: ["Do not store secrets, credentials, private keys, regulated data, or private user state unless explicitly requested and appropriate."],
+  },
+  {
+    label: "improve",
+    fileA: "agents/based-improver.md",
+    fileB: "skills/improve/SKILL.md",
+    phrases: [
+      "Self-improvement is proposal-driven and reversible.",
+      "Require independent review for evaluator, safety, memory policy, or executable-script changes.",
+    ],
+  },
+  {
+    label: "minimize",
+    fileA: "agents/based-minimizer.md",
+    fileB: "skills/minimize/SKILL.md",
+    phrases: [
+      "Security controls.",
+      "Trust-boundary validation.",
+      "Data-loss prevention.",
+      "Accessibility.",
+      "Project-required tests or validators.",
+      "Explicit user requirements.",
+    ],
+  },
+];
+for (const pair of ruleCopyPairs) {
+  const textA = readText(path.join(root, pair.fileA));
+  const textB = readText(path.join(root, pair.fileB));
+  for (const phrase of pair.phrases) {
+    const inA = textA.includes(phrase);
+    const inB = textB.includes(phrase);
+    if (inA !== inB) {
+      errors.push(`Rule-copy drift (${pair.label}): "${phrase}" present in ${inA ? pair.fileA : pair.fileB} but not ${inA ? pair.fileB : pair.fileA}.`);
+    } else if (!inA && !inB) {
+      warnings.push(`Rule-copy anchor missing from both ${pair.fileA} and ${pair.fileB}: "${phrase}" (drift check needs updating or the shared policy was intentionally reworded in both files).`);
+    }
+  }
+}
+
 const readme = readText(path.join(root, "README.md"));
 for (const token of ["based-doctor", "based-quality-gate", "based-plan", "based-memory", "based-trace", "based-improve", "/based-claude:code", "/based-claude:plan-file"]) {
   if (!readme.includes(token)) warnings.push(`README does not mention ${token}`);
-}
-
-const zipPath = path.resolve(root, "..", `${path.basename(root)}.zip`);
-if (fs.existsSync(zipPath)) {
-  const sourceFiles = recursiveFiles(root, { skip: [".based-smoke", "node_modules", ".git"] });
-  const newestSource = sourceFiles.reduce((max, file) => Math.max(max, fs.statSync(file).mtimeMs), 0);
-  if (fs.statSync(zipPath).mtimeMs < newestSource) {
-    warnings.push(`${path.basename(zipPath)} is older than plugin source files; regenerate the archive after changes.`);
-  }
 }
 
 console.log("# Based Claude Plugin Check");

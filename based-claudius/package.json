@@ -1,0 +1,31 @@
+{
+  "name": "based-claudius",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Consolidated Claude Code plugin for production coding: router workflow, artifact state, validation, code-elegance gates, governed memory.",
+  "license": "MIT",
+  "bin": {
+    "claudius-doctor": "bin/claudius-doctor.js",
+    "claudius-quality-gate": "bin/claudius-quality-gate.js",
+    "claudius-slop-check": "bin/claudius-slop-check.js",
+    "claudius-plan": "bin/claudius-plan.js",
+    "claudius-handoff": "bin/claudius-handoff.js",
+    "claudius-memory": "bin/claudius-memory.js",
+    "claudius-trace": "bin/claudius-trace.js",
+    "claudius-improve": "bin/claudius-improve.js",
+    "claudius-plugin-check": "bin/claudius-plugin-check.js"
+  },
+  "scripts": {
+    "check": "node bin/claudius-plugin-check.js",
+    "doctor": "node bin/claudius-doctor.js",
+    "quality-gate": "node bin/claudius-quality-gate.js",
+    "slop-check": "node bin/claudius-slop-check.js",
+    "plan-file": "node bin/claudius-plan.js",
+    "handoff": "node bin/claudius-handoff.js",
+    "memory": "node bin/claudius-memory.js",
+    "trace": "node bin/claudius-trace.js",
+    "improve": "node bin/claudius-improve.js",
+    "scorecard": "node bin/claudius-plugin-check.js --scorecard",
+    "test": "node --test bin"
+  }
+}

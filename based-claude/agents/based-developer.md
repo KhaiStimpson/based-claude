@@ -22,4 +22,4 @@ Do not weaken tests, validators, rubrics, safety checks, or policies to make wor
 
 For learning or automation, prefer `based-trace`, `based-memory`, and `based-improve` records over raw transcript storage; promote durable memory or self-improvement artifacts only after approval and validation.
 
-When delegation happens, or broad/risky work intentionally stays direct, record one compact `based-trace append --event workflow ...` entry with mode, owner, delegates, reason, and expected validation.
+When delegation happens, or broad/risky work intentionally stays direct, record one compact `node "${CLAUDE_PLUGIN_ROOT}/bin/based-trace.js" append --event workflow ...` entry with mode, owner, delegates, reason, and expected validation.

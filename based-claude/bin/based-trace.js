@@ -42,11 +42,13 @@ Append options:
   --sanitized-inputs
   --rollback "rollback note"
   --external-output-policy "sanitized excerpt only"
-  --model-assumption "Claude Sonnet 5"
-  --effort low|medium|high|xhigh
+  --model-assumption "model alias, e.g. sonnet or fable"
+  --effort low|medium|high|xhigh|max
   --token-headroom "large"
   --tool-trigger "tests required before completion"
   --review-stage discovery|verification|reporting
+  --judge-independent
+  --escalation-path "who/what to escalate a disputed verdict to"
   --memory-candidate
   --improvement-candidate
 
@@ -84,6 +86,8 @@ function append() {
     token_headroom: args["token-headroom"] || "",
     tool_trigger: args["tool-trigger"] || "",
     review_stage: args["review-stage"] || "",
+    judge_independent: args["judge-independent"] === undefined ? null : Boolean(args["judge-independent"]),
+    escalation_path: args["escalation-path"] || "",
     memoryCandidate: Boolean(args["memory-candidate"]),
     improvementCandidate: Boolean(args["improvement-candidate"]),
   };

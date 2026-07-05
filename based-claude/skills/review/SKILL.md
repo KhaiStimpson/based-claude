@@ -8,6 +8,16 @@ when_to_use: Use when the user asks for review, pre-merge inspection, risk asses
 
 Default to a code-review stance. Findings lead the response.
 
+## Relationship To The Native `/code-review` Skill
+
+Claude Code now bundles `/code-review`, a fresh-subagent correctness pass with an
+optional `--fix` and a cloud `ultra` multi-agent mode. For a quick correctness check on a
+small, self-contained diff, native `/code-review` is enough on its own — use it directly.
+Use this skill instead (or run `/code-review` first as the discovery pass, then apply the
+rest of this skill's policy) when the change touches workflow files, evaluators,
+validators, safety surfaces, or durable memory, where recall-first discovery, contract
+drift, and hidden-state checks matter more than a single correctness pass.
+
 ## Read First
 
 - `../../references/validation-ladder.md`

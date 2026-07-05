@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "based-claudius",
+  "displayName": "Based Claudius",
+  "version": "0.1.0",
+  "description": "The consolidated Based flagship: one router entrypoint, artifact-backed state, deterministic validation, code-elegance review gates, governed memory, and gated self-improvement.",
+  "author": {
+    "name": "MAS Research Knowledgebase"
+  },
+  "license": "MIT",
+  "keywords": [
+    "coding-agents",
+    "production-engineering",
+    "code-quality",
+    "validation",
+    "agent-memory",
+    "claude-code"
+  ],
+  "defaultEnabled": true
+}

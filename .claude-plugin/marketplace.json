@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-marketplace.json",
+  "name": "based-claude-marketplace",
+  "owner": {
+    "name": "KhaiStimpson"
+  },
+  "plugins": [
+    {
+      "name": "based-claudius",
+      "source": "./based-claudius",
+      "description": "The consolidated Based flagship: one router entrypoint, artifact-backed state, deterministic validation, code-elegance review gates, governed memory, and gated self-improvement."
+    },
+    {
+      "name": "based-claude",
+      "source": "./based-claude",
+      "description": "Research-grounded Claude Code workflow for production software work: disciplined context loading, scoped implementation, validation, review, safety, memory, and handoff."
+    },
+    {
+      "name": "based-claudia",
+      "source": "./based-claudia",
+      "description": "Artifact-first Claude Code workflow kernel for planning, implementation, validation, review, handoff, and governed learning."
+    },
+    {
+      "name": "based-claudista",
+      "source": "./based-claudista",
+      "description": "Claude Code workflow control plane with compact state, loop modes, quality gates, governed memory, and trace-derived improvement."
+    }
+  ]
+}

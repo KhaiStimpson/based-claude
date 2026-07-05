@@ -1,0 +1,97 @@
+# Governed Memory Card Schema
+
+Use this schema for durable cards under `.claudius/memory/cards/` or another explicitly approved project memory store.
+
+Default layout:
+
+```text
+.claudius/memory/cards/drafts/
+.claudius/memory/cards/active/
+.claudius/memory/cards/retired/
+.claudius/memory/promotions.jsonl
+.claudius/memory/retirements.jsonl
+```
+
+```yaml
+---
+type: memory-card
+title: "Short name"
+scope: session | feature | repo | user | global
+status: active | draft | superseded | retired
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+source:
+  kind: user-statement | validated-trace | repository-evidence | external-reference
+  path_or_id: ""
+  captured_by: ""
+provenance:
+  evidence: []
+  derivation: ""
+confidence: high | medium | low
+applies_when: []
+does_not_apply_when: []
+supersedes: []
+superseded_by: []
+retirement_condition: ""
+privacy:
+  contains_sensitive_data: false
+  allowed_readers: []
+---
+```
+
+## Body
+
+Use this structure:
+
+```md
+# Title
+
+## Claim
+
+One compact statement of the reusable fact, preference, pattern, or failure shield.
+
+## Evidence
+
+Paths, commands, outputs, user statements, issue IDs, or trace IDs.
+
+## How To Use
+
+Concrete activation cues and actions.
+
+## Failure Modes
+
+How this card can become stale, leak, or mislead.
+
+## Validation
+
+Checks that proved it, plus what remains unproven.
+```
+
+## Admission Rules
+
+- Prefer no memory over weak memory.
+- Do not use task success alone as memory-quality evidence.
+- Do not promote raw transcript dumps.
+- Do not write secrets or personal data.
+- Preserve explicit contradictions instead of overwriting.
+- Record supersession and retirement, not only creation.
+
+## Workflow
+
+1. Draft from explicit user statements, validated traces, repository evidence, or external references.
+2. Audit schema, scope, sensitivity, confidence, provenance, and duplicate active titles.
+3. Retrieve by scope before applying the card to a task.
+4. Promote only with approval. Promotion moves the source draft into `active/`; the draft no longer exists at its original path.
+5. Retire or supersede cards when evidence changes. Retirement moves the source card into `retired/`; it no longer exists in `active/` and stops matching `retrieve`.
+6. Periodically run `audit --recovery` to confirm active cards are actually findable via their own `applies_when` cues, and that no retired or superseded card still sits in `active/`.
+
+## Commands
+
+```bash
+node "${CLAUDE_PLUGIN_ROOT}/bin/claudius-memory.js" suggest --write
+node "${CLAUDE_PLUGIN_ROOT}/bin/claudius-memory.js" promote card-slug --approved --supersession-reviewed
+node "${CLAUDE_PLUGIN_ROOT}/bin/claudius-memory.js" retrieve --query "test command" --scope repo,user
+node "${CLAUDE_PLUGIN_ROOT}/bin/claudius-memory.js" retire card-slug --approved
+node "${CLAUDE_PLUGIN_ROOT}/bin/claudius-memory.js" audit --strict
+node "${CLAUDE_PLUGIN_ROOT}/bin/claudius-memory.js" audit --recovery
+```

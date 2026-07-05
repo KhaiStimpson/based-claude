@@ -15,7 +15,6 @@ const SKIP_DIRS = new Set([
   ".cache",
   "__pycache__",
   "target",
-  "bin",
   "obj",
 ]);
 
@@ -491,7 +490,10 @@ function timestampId(prefix) {
 }
 
 function yamlString(value) {
-  return `"${String(value || "").replace(/\\/g, "\\\\").replace(/"/g, "'")}"`;
+  return `"${String(value || "")
+    .replace(/\\/g, "\\\\")
+    .replace(/"/g, '\\"')
+    .replace(/\r?\n/g, "\\n")}"`;
 }
 
 function containsSensitiveText(text) {

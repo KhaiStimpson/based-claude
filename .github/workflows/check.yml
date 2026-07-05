@@ -1,0 +1,46 @@
+name: check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  based-claudius:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Structural and governance check
+        run: node based-claudius/bin/claudius-plugin-check.js
+      - name: Harness scorecard
+        run: node based-claudius/bin/claudius-plugin-check.js --scorecard
+      - name: Behavioral test suite
+        run: npm --prefix based-claudius test
+
+  based-claude:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Structural and governance check
+        run: node based-claude/bin/based-plugin-check.js
+      - name: Harness scorecard
+        run: node based-claude/bin/based-plugin-check.js --scorecard
+      - name: Behavioral test suite
+        run: npm --prefix based-claude test
+
+  sibling-plugins:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: based-claudia check
+        run: npm --prefix based-claudia run check
+      - name: based-claudista check
+        run: npm --prefix based-claudista run check

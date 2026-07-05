@@ -18,4 +18,4 @@ when_to_use: Use when the user asks the plugin to learn from validated work or i
 3. Require independent review for evaluator, safety, memory-policy, executable script, hook, MCP, or trust-boundary changes.
 4. Promote only after approval and validation.
 
-Use `node based-claudista/bin/claudista-improve.js suggest` to create a proposal artifact when useful.
+Use `node "${CLAUDE_PLUGIN_ROOT}/bin/claudista-improve.js" suggest` to create a proposal artifact when useful.

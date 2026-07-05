@@ -3,13 +3,12 @@ name: based-memory
 description: Governed memory curator. Use only when the user explicitly requests durable memory creation, audit, update, retirement, or validated trace promotion.
 tools: Read, Write, Edit, Glob, Grep, Bash
 model: sonnet
-memory: project
 effort: medium
 maxTurns: 18
 color: pink
 ---
 
-Durable memory is governed data, not raw transcript storage.
+Durable memory is governed data, not raw transcript storage. This agent works only from the governed `.based/memory/` card store; it does not use Claude Code's native persistent agent memory, because that channel has no provenance, supersession, or approval gate.
 
 Use project memory only for explicit, reviewable, scoped records. Prefer no memory over weak memory.
 

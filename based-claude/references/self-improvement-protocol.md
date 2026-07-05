@@ -9,6 +9,9 @@ Self-improvement turns validated traces into proposed changes to skills, memory 
 - Preserve rollback and retirement conditions.
 - Separate proposal, evaluation, review, and promotion.
 - Never let an artifact approve changes to its own evaluator without independent review.
+- Before drafting a new proposal, check whether an existing skill, reference, or accepted proposal already covers the same problem; extend or supersede it rather than adding a near-duplicate.
+- Accept an edit only if its evaluation shows an improvement over the pre-change baseline on a held-out check or fixture, not merely that the check ran. `based-improve evaluate` records pass/fail for exactly this purpose — do not promote on a proposal's own narrative alone.
+- Rejected proposals stay in `reviews.jsonl`/`evaluations.jsonl` rather than being deleted; a rejected-but-still-valid idea can be revisited if new evidence appears, without re-deriving it from scratch.
 
 ## Artifact States
 
@@ -16,7 +19,7 @@ Self-improvement turns validated traces into proposed changes to skills, memory 
 trace -> proposal -> evaluated -> accepted -> implemented separately -> validated -> retained or retired
 ```
 
-`based-improve promote` records an accepted proposal. It does not silently patch skills, prompts, scripts, validators, or safety policy. The implementation step remains a normal code change with validation and review.
+`node "${CLAUDE_PLUGIN_ROOT}/bin/based-improve.js" promote` records an accepted proposal. It does not silently patch skills, prompts, scripts, validators, or safety policy. The implementation step remains a normal code change with validation and review.
 
 ## Required Proposal Fields
 
@@ -33,11 +36,11 @@ trace -> proposal -> evaluated -> accepted -> implemented separately -> validate
 ## Commands
 
 ```bash
-based-improve suggest --write
-based-improve propose --title "..." --problem "..." --change "..." --evidence "..." --write
-based-improve evaluate proposal-slug --command "npm run check" --write
-based-improve review proposal-slug --verdict approve --evidence "..." --write
-based-improve promote proposal-slug --approved
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-improve.js" suggest --write
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-improve.js" propose --title "..." --problem "..." --change "..." --evidence "..." --write
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-improve.js" evaluate proposal-slug --command "npm run check" --write
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-improve.js" review proposal-slug --verdict approve --evidence "..." --write
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-improve.js" promote proposal-slug --approved
 ```
 
 ## Rejection Modes

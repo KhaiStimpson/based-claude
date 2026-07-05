@@ -30,12 +30,14 @@ Self-improvement is proposal-driven and reversible.
 
 ## Helpers
 
+Invoke as `node "${CLAUDE_PLUGIN_ROOT}/bin/based-improve.js" <action> [args]` so the command resolves regardless of install location.
+
 ```bash
-based-improve suggest --write
-based-improve propose --title "..." --problem "..." --change "..." --evidence "..." --write
-based-improve evaluate proposal-slug --command "npm run check" --write
-based-improve review proposal-slug --verdict approve --evidence "..." --write
-based-improve promote proposal-slug --approved
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-improve.js" suggest --write
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-improve.js" propose --title "..." --problem "..." --change "..." --evidence "..." --write
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-improve.js" evaluate proposal-slug --command "npm run check" --write
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-improve.js" review proposal-slug --verdict approve --evidence "..." --write
+node "${CLAUDE_PLUGIN_ROOT}/bin/based-improve.js" promote proposal-slug --approved
 ```
 
 Do not silently edit skills, prompts, scripts, validators, or safety policy from a trace alone.

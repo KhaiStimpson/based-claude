@@ -4,6 +4,16 @@
   "private": true,
   "description": "Claude Code plugin for research-grounded production coding workflows.",
   "license": "MIT",
+  "bin": {
+    "based-doctor": "bin/based-doctor.js",
+    "based-quality-gate": "bin/based-quality-gate.js",
+    "based-plan": "bin/based-plan.js",
+    "based-handoff": "bin/based-handoff.js",
+    "based-memory": "bin/based-memory.js",
+    "based-trace": "bin/based-trace.js",
+    "based-improve": "bin/based-improve.js",
+    "based-plugin-check": "bin/based-plugin-check.js"
+  },
   "scripts": {
     "check": "node bin/based-plugin-check.js",
     "doctor": "node bin/based-doctor.js",
@@ -13,6 +23,7 @@
     "memory": "node bin/based-memory.js",
     "trace": "node bin/based-trace.js",
     "improve": "node bin/based-improve.js",
-    "scorecard": "node bin/based-plugin-check.js --scorecard"
+    "scorecard": "node bin/based-plugin-check.js --scorecard",
+    "test": "node --test bin"
   }
 }

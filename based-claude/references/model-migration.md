@@ -11,14 +11,15 @@ Model-specific guidance is part of the harness contract, not scattered prompt de
 Use model aliases, never dated model IDs; aliases track the latest snapshot when the harness upgrades.
 
 - `inherit` / `sonnet` (latest): default for implementation, repair, validation, review, safety, memory, improvement, and minimization roles.
-- `opus`: reserved for hard reasoning and planning — `based-planner` runs on it because it is only invoked when work is broad, ambiguous, or architectural.
+- `opus`: reserved for hard reasoning and planning — `based-planner` runs on it because it is only invoked when work is broad, ambiguous, or architectural. `opusplan` (opus during plan mode, sonnet for execution) is a reasonable alternative for interactive sessions but is a session-level model setting, not a subagent frontmatter value; it does not apply to `based-planner`'s own `model:` field.
 - `haiku`: cheap read-only exploration — `based-scout` runs on it; keep haiku-facing prompts short, literal, and free of judgment calls.
+- `fable`: the most capable current alias, intended for the hardest and longest-running tasks; it is not the harness default and costs more. Nothing in this plugin pins `fable` by default — treat switching a role to it as a deliberate, evidence-backed decision (see `research-basis.md` rule 1: add capability only when the work justifies it), not a blanket upgrade.
 
 If a dated model ID ever appears in this plugin, it is a bug; replace it with an alias and validate against the live harness.
 
-## Claude Sonnet 5 Notes
+## Effort And Token Notes
 
-These rules are based on medium-confidence vendor guidance plus local MAS wiki synthesis. Validate them against the live Claude Code environment before treating them as hard policy.
+These rules are based on medium-confidence vendor guidance plus local MAS wiki synthesis. Validate them against the live Claude Code environment before treating them as hard policy. Effort levels are `low`, `medium`, `high`, `xhigh`; `max` and the `ultracode` session mode exist but are session-only settings, not subagent frontmatter values, and are not accepted in `effortLevel`. Effort scale and defaults are calibrated per model — the same level name is not the same underlying budget across models, and a level unsupported by the active model falls back to the highest one it does support.
 
 - Use high effort for ordinary implementation, repair, planning, and review. Reserve lower effort for narrow lookup, formatting, and clerical edits.
 - Escalate to xhigh effort for hard debugging, broad architectural planning, safety-sensitive review, agentic tool-heavy work, and changes to validators, memory, policies, scripts, or trust boundaries. Agent frontmatter pins conservative defaults (`high` for owner/repair/review/safety roles, `medium` for scout/validator/memory/minimizer); escalate per invocation rather than raising the defaults.

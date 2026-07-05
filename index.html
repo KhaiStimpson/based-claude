@@ -15,6 +15,7 @@
       --claude: #ff5a3d;
       --claudia: #008f89;
       --claudista: #325bff;
+      --claudius: #8b3dff;
       --signal: #c9dd3f;
       --amber: #f2aa35;
       --shadow: 0 18px 45px rgba(24, 28, 26, 0.1);
@@ -215,7 +216,7 @@
 
     .metric-row {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
       margin-top: 38px;
       max-width: 700px;
@@ -273,8 +274,8 @@
     .map {
       display: grid;
       grid-template-columns: 1fr 42px 1fr 42px 1fr;
-      grid-template-rows: repeat(3, auto);
-      align-items: center;
+      grid-template-rows: repeat(4, auto);
+      align-items: stretch;
       gap: 14px 8px;
     }
 
@@ -301,17 +302,29 @@
 
     .arrow {
       position: relative;
+      height: 100%;
+      min-height: 2px;
+    }
+
+    .arrow::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 8px;
+      top: 50%;
       height: 2px;
       background: var(--line-strong);
+      transform: translateY(-50%);
     }
 
     .arrow::after {
       content: "";
       position: absolute;
       right: -1px;
-      top: -5px;
+      top: 50%;
       width: 0;
       height: 0;
+      transform: translateY(-50%);
       border-top: 6px solid transparent;
       border-bottom: 6px solid transparent;
       border-left: 8px solid var(--line-strong);
@@ -340,6 +353,10 @@
       color: var(--claudista);
     }
 
+    .c-claudius {
+      color: var(--claudius);
+    }
+
     .band {
       margin: 0 calc(50% - 50vw);
       padding: 58px calc(50vw - 50%);
@@ -363,7 +380,7 @@
 
     .plugin-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 18px;
     }
 
@@ -389,6 +406,10 @@
 
     .plugin-card.claudista {
       border-top-color: var(--claudista);
+    }
+
+    .plugin-card.claudius {
+      border-top-color: var(--claudius);
     }
 
     .plugin-card header {
@@ -459,6 +480,47 @@
       background: var(--line);
     }
 
+    .persona-glyph {
+      display: grid;
+      place-items: center;
+      width: 100%;
+      height: 100%;
+      background: #101413;
+    }
+
+    .persona-glyph .ring {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 6px;
+      width: 42%;
+      aspect-ratio: 1 / 1;
+      transform: rotate(45deg);
+    }
+
+    .persona-glyph .ring span {
+      display: block;
+      border-radius: 3px;
+      background: var(--line-strong);
+    }
+
+    .persona-glyph .ring span:nth-child(1) {
+      background: var(--claude);
+    }
+
+    .persona-glyph .ring span:nth-child(2) {
+      background: var(--claudia);
+    }
+
+    .persona-glyph .ring span:nth-child(3) {
+      background: var(--claudista);
+    }
+
+    .persona-glyph .ring span:nth-child(4) {
+      background: var(--claudius);
+    }
+
     .plugin-body {
       display: flex;
       flex: 1;
@@ -511,7 +573,7 @@
 
     .flow-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 18px;
     }
 
@@ -582,6 +644,10 @@
 
     .flow-panel.claudista .flow-node {
       border-left-color: var(--claudista);
+    }
+
+    .flow-panel.claudius .flow-node {
+      border-left-color: var(--claudius);
     }
 
     .compare-wrap {
@@ -736,7 +802,7 @@
 
     .run-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 18px;
     }
 
@@ -788,6 +854,14 @@
       padding: 36px 0 54px;
       color: var(--muted);
       font-size: 0.92rem;
+    }
+
+    @media (max-width: 1300px) {
+      .plugin-grid,
+      .flow-grid,
+      .run-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     @media (max-width: 1020px) {
@@ -859,6 +933,14 @@
         margin: 0 auto;
       }
 
+      .arrow::before {
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 100%;
+        transform: none;
+      }
+
       .arrow::after {
         left: -5px;
         right: auto;
@@ -914,14 +996,15 @@
       <section class="intro" aria-labelledby="page-title">
         <div>
           <span class="eyebrow">Claude Code workflow plugins</span>
-          <h1 id="page-title">Three ways to make Claude work like a disciplined software team.</h1>
+          <h1 id="page-title">Four ways to make Claude work like a disciplined software team.</h1>
           <p class="lede">
-            The Based Claude family packages the same research-backed operating principles into three different product shapes: a comprehensive workflow suite, a visible artifact spine, and a routed control plane.
+            The Based Claude family packages the same research-backed operating principles into four product shapes: a comprehensive workflow suite, a visible artifact spine, a routed control plane, and a consolidated flagship that merges all three.
           </p>
           <div class="intro-actions" aria-label="Local README links">
             <a href="./based-claude/README.md">Based Claude README</a>
             <a href="./based-claudia/README.md">Based Claudia README</a>
             <a href="./based-claudista/README.md">Based Claudista README</a>
+            <a href="./based-claudius/README.md">Based Claudius README</a>
           </div>
           <div class="metric-row" aria-label="Plugin family metrics">
             <div class="metric">
@@ -936,6 +1019,10 @@
               <strong>1</strong>
               <span>Based Claudista primary router for normal work</span>
             </div>
+            <div class="metric">
+              <strong>7</strong>
+              <span>Based Claudius skills consolidating the whole family</span>
+            </div>
           </div>
         </div>
 
@@ -945,13 +1032,13 @@
             <span>Same principles, different interfaces</span>
           </div>
           <div class="board-canvas">
-            <div class="map" role="img" aria-label="A flow from user objective to three plugin styles and their output states">
-              <div class="map-node" style="grid-column: 1; grid-row: 1 / span 3;">
+            <div class="map" role="img" aria-label="A flow from user objective to four plugin styles and their output states">
+              <div class="map-node" style="grid-column: 1; grid-row: 1 / span 4;">
                 <strong>User objective</strong>
                 <small>Feature work, repairs, reviews, validation, memory, handoff, or recurring operational loops.</small>
                 <span class="tag">input</span>
               </div>
-              <div class="arrow" style="grid-column: 2; grid-row: 2;"></div>
+              <div class="arrow" style="grid-column: 2; grid-row: 1 / span 4;"></div>
 
               <div class="map-node" style="grid-column: 3; grid-row: 1;">
                 <strong>Based Claude</strong>
@@ -968,9 +1055,14 @@
                 <small>Use one router, then let task shape select the right lane.</small>
                 <span class="tag c-claudista">control plane</span>
               </div>
+              <div class="map-node" style="grid-column: 3; grid-row: 4;">
+                <strong>Based Claudius</strong>
+                <small>Merge router, artifacts, memory, and quality gate into one flagship plugin.</small>
+                <span class="tag c-claudius">flagship</span>
+              </div>
 
-              <div class="arrow" style="grid-column: 4; grid-row: 2;"></div>
-              <div class="map-node" style="grid-column: 5; grid-row: 1 / span 3;">
+              <div class="arrow" style="grid-column: 4; grid-row: 1 / span 4;"></div>
+              <div class="map-node" style="grid-column: 5; grid-row: 1 / span 4;">
                 <strong>Operational evidence</strong>
                 <small>Plan files, traces, checks, reviews, governed memory cards, improvement proposals, and compact handoffs.</small>
                 <span class="tag">output</span>
@@ -1060,6 +1152,31 @@
               <a class="readme-link" href="./based-claudista/README.md">Open local README</a>
             </div>
           </article>
+
+          <article class="plugin-card claudius">
+            <header>
+              <span class="type">Consolidated flagship</span>
+              <h3>Based Claudius</h3>
+              <p>Merges the three siblings into one production workflow: based-claudista's router entrypoint, based-claudia's artifact-backed state, and based-claude's reference depth, governed memory, and gated self-improvement, plus a delivered-code quality contract.</p>
+            </header>
+            <figure class="persona-visual">
+              <div class="persona-frame">
+                <div class="persona-glyph" role="img" aria-label="Non-human consolidated core merging the three sibling colors, representing Based Claudius">
+                  <div class="ring"><span></span><span></span><span></span><span></span></div>
+                </div>
+              </div>
+              <figcaption>Flagship Core</figcaption>
+            </figure>
+            <div class="plugin-body">
+              <ul class="fact-list">
+                <li><b>Best for</b><span>Teams that want the router, artifact spine, reference depth, memory, and quality gate in a single plugin.</span></li>
+                <li><b>Shape</b><span>One router command plus specialist commands; default <code>claudius-developer</code> owner agent.</span></li>
+                <li><b>State</b><span>Consolidated <code>.claudius/</code> artifact tree for plans, traces, memory, improvements, and handoffs, written only on request.</span></li>
+              </ul>
+              <div class="command-line">/based-claudius:work<br>/based-claudius:plan<br>/based-claudius:check</div>
+              <a class="readme-link" href="./based-claudius/README.md">Open local README</a>
+            </div>
+          </article>
         </div>
       </section>
 
@@ -1116,6 +1233,20 @@
               <div class="flow-node"><strong>Quality gate closes the run</strong><span>Validation evidence, reviewer separation, risks, and rollback notes keep outputs accountable.</span></div>
             </div>
           </article>
+
+          <article class="flow-panel claudius">
+            <header>
+              <h3>Based Claudius flow</h3>
+              <p>One router carries the whole family's contract.</p>
+            </header>
+            <div class="flow-stack">
+              <div class="flow-node"><strong>Work command routes by phase</strong><span><code>/based-claudius:work</code> moves through discover, plan, act, verify, review, handoff, and improve.</span></div>
+              <div class="flow-node"><strong>Owner keeps artifact-backed state</strong><span><code>claudius-developer</code> writes to <code>.claudius/</code> only on request.</span></div>
+              <div class="flow-node"><strong>Code-elegance gate checks the diff</strong><span><code>claudius-slop-check.js</code> makes the mechanical style pass checkable before review.</span></div>
+              <div class="flow-node"><strong>Memory and improvement stay gated</strong><span>Governed memory cards and proposal-driven improvement require validated evidence.</span></div>
+              <div class="flow-node"><strong>Review before trust</strong><span>Deterministic validation ladder ends with independent review, same as the rest of the family.</span></div>
+            </div>
+          </article>
         </div>
       </section>
 
@@ -1138,6 +1269,7 @@
                 <th>Based Claude</th>
                 <th>Based Claudia</th>
                 <th>Based Claudista</th>
+                <th>Based Claudius</th>
               </tr>
             </thead>
             <tbody>
@@ -1146,42 +1278,49 @@
                 <td><strong>Production coding suite.</strong> Many specific workflows for planning, coding, repair, validation, review, safety, trace, memory, improvement, minimization, and handoff.</td>
                 <td><strong>Artifact spine.</strong> Small command surface where durable state files are the center of the operating model.</td>
                 <td><strong>Workflow control plane.</strong> Router-driven interface that selects the right mode from one normal work command.</td>
+                <td><strong>Consolidated flagship.</strong> Merges the router entrypoint, artifact-backed state, reference depth, governed memory, and gated self-improvement of the three siblings, plus a delivered-code quality contract.</td>
               </tr>
               <tr>
                 <th>Default agent</th>
                 <td><code>based-developer</code></td>
                 <td><code>claudia-developer</code></td>
                 <td><code>claudista-developer</code></td>
+                <td><code>claudius-developer</code></td>
               </tr>
               <tr>
                 <th>Command count</th>
                 <td>14 skills, including <code>code</code>, <code>plan</code>, <code>plan-file</code>, <code>repair</code>, <code>validate</code>, <code>review</code>, <code>safety</code>, <code>memory</code>, <code>improve</code>, and <code>handoff</code>.</td>
                 <td>7 skills: <code>start</code>, <code>plan</code>, <code>implement</code>, <code>check</code>, <code>review</code>, <code>handoff</code>, and <code>learn</code>.</td>
                 <td>6 skills with <code>work</code> as the main router, plus <code>plan</code>, <code>check</code>, <code>memory</code>, <code>improve</code>, and <code>handoff</code>.</td>
+                <td>7 skills with <code>work</code> as the main router, plus <code>start</code>, <code>plan</code>, <code>check</code>, <code>memory</code>, <code>improve</code>, and <code>handoff</code>.</td>
               </tr>
               <tr>
                 <th>State model</th>
                 <td>Opt-in evidence artifacts through helpers: plans, traces, memory cards, improvement proposals, quality gates, and handoffs.</td>
                 <td>Explicit <code>.based/**</code> artifact spine with current state, plans, action traces, validation records, reviews, handoffs, and memory drafts.</td>
                 <td>Dedicated <code>.based-claudista/**</code> runtime tree for runs, traces, memory cards, improvements, handoffs, and plans.</td>
+                <td>Consolidated <code>.claudius/**</code> artifact tree for plans, traces, validation, memory, improvements, and handoffs.</td>
               </tr>
               <tr>
                 <th>Best task fit</th>
                 <td>High-variety product engineering where you want a named workflow for almost every phase.</td>
                 <td>Resumable project work where the team wants fewer commands and visible files that explain progress.</td>
                 <td>Operational work where the system should route tasks and enforce loop-mode boundaries.</td>
+                <td>Teams that want one plugin covering the whole family's contract instead of choosing between three shapes.</td>
               </tr>
               <tr>
                 <th>Validation style</th>
                 <td>Quality-gate helper, deterministic checks, fresh review policy, and optional strict plugin validation.</td>
                 <td>Check command records validation evidence as part of the artifact spine.</td>
                 <td>Quality gate plus lane routing, reviewer separation, and loop-mode constraints.</td>
+                <td>Quality gate, mechanical code-style pass (<code>claudius-slop-check.js</code>), deterministic ladder, and independent review.</td>
               </tr>
               <tr>
                 <th>Memory and improvement</th>
                 <td>Governed memory cards and proposal-driven improvement helpers.</td>
                 <td>Memory begins as drafts under <code>.based/memory/drafts</code> before promotion.</td>
                 <td>Memory cards and improvement proposals live inside the control-plane state tree.</td>
+                <td>Governed memory cards and skill-radar-driven improvement proposals, gated by validated traces.</td>
               </tr>
             </tbody>
           </table>
@@ -1189,7 +1328,7 @@
 
         <div class="note-strip">
           <b>Shortest rule</b>
-          <p>Use Based Claude when you want breadth, Based Claudia when you want durable state first, and Based Claudista when you want a router to choose the workflow lane.</p>
+          <p>Use Based Claude when you want breadth, Based Claudia when you want durable state first, Based Claudista when you want a router to choose the workflow lane, and Based Claudius when you want all of that merged into one flagship plugin.</p>
         </div>
       </section>
 
@@ -1237,6 +1376,10 @@
               <b>Choose Based Claudista for routed operations.</b>
               <span>It is the strongest fit for recurring work, controlled loop modes, and one-command task routing.</span>
             </div>
+            <div class="choose-item">
+              <b>Choose Based Claudius for the consolidated flagship.</b>
+              <span>It merges router, artifacts, reference depth, memory, and quality gate into one plugin instead of choosing between the three siblings.</span>
+            </div>
           </aside>
         </div>
       </section>
@@ -1248,7 +1391,7 @@
             <h2 id="run-title">Load one plugin at a time from this folder.</h2>
           </div>
           <p>
-            These commands assume the shell is in <code>C:\Dev\mas-research-knowledgebase\based-claude</code>, the wrapper folder that contains all three plugin directories.
+            These commands assume the shell is in <code>C:\Dev\mas-research-knowledgebase\based-claude</code>, the wrapper folder that contains all four plugin directories.
           </p>
         </div>
 
@@ -1271,17 +1414,23 @@
 /reload-plugins
 /based-claudista:work &lt;goal&gt;</code></pre>
           </article>
+          <article class="run-card">
+            <h3>Based Claudius</h3>
+            <pre><code>claude --plugin-dir ./based-claudius
+/reload-plugins
+/based-claudius:start</code></pre>
+          </article>
         </div>
 
         <div class="note-strip">
           <b>Validation</b>
-          <p>Each plugin includes a no-dependency local checker through its package scripts: <code>npm --prefix based-claude run check</code>, <code>npm --prefix based-claudia run check</code>, and <code>npm --prefix based-claudista run check</code>.</p>
+          <p>Each plugin includes a no-dependency local checker through its package scripts: <code>npm --prefix based-claude run check</code>, <code>npm --prefix based-claudia run check</code>, <code>npm --prefix based-claudista run check</code>, and <code>npm --prefix based-claudius run check</code>.</p>
         </div>
       </section>
     </main>
 
     <footer>
-      Static comparison page for the local Based Claude plugin family. Source directories: <code>based-claude/</code>, <code>based-claudia/</code>, and <code>based-claudista/</code>.
+      Static comparison page for the local Based Claude plugin family. Source directories: <code>based-claude/</code>, <code>based-claudia/</code>, <code>based-claudista/</code>, and <code>based-claudius/</code>.
     </footer>
   </div>
 </body>

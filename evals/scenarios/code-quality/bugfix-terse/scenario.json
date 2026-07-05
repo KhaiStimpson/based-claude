@@ -1,0 +1,14 @@
+{
+  "name": "bugfix-terse",
+  "task": "The test suite has a failing test in this repo. Find the bug and fix it so the tests pass. Keep the change minimal.",
+  "baseline": "tests-fail",
+  "maxTurns": 20,
+  "allowedTools": ["Read", "Glob", "Grep", "Edit", "Write", "Bash"],
+  "gates": {
+    "tests": "node --test",
+    "slopStrict": true,
+    "allowedPaths": ["src/"],
+    "mustChange": ["src/"]
+  },
+  "judge": "judge.md"
+}

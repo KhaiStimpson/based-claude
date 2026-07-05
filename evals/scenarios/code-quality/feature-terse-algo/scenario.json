@@ -1,0 +1,14 @@
+{
+  "name": "feature-terse-algo",
+  "task": "Implement `mergeIntervals` in src/intervals.js so the failing test passes. It takes an array of [start, end] pairs and returns the merged set of non-overlapping intervals sorted by start. Match the style of the rest of this file.",
+  "baseline": "tests-fail",
+  "maxTurns": 20,
+  "allowedTools": ["Read", "Glob", "Grep", "Edit", "Write", "Bash"],
+  "gates": {
+    "tests": "node --test",
+    "slopStrict": true,
+    "allowedPaths": ["src/"],
+    "mustChange": ["src/intervals.js"]
+  },
+  "judge": "judge.md"
+}

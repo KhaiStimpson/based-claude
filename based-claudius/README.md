@@ -74,6 +74,12 @@ npm run scorecard # harness component scorecard
 
 `fixtures/README.md` maps each claimed guarantee to the test or review pass that proves it.
 
+For the prompt-level guarantees that fixtures can only document — does the agent write code
+that fits the host codebase, do the right skills trigger — the live behavioral suite in
+[`../evals`](../evals/README.md) runs the real plugin in headless sessions against fixture
+repositories and grades the diffs deterministically first, then with an independent judge.
+It costs tokens and is run manually; `npm run eval:dry` exercises the whole pipeline for free.
+
 ## Relationship To The Siblings
 
 `based-claude`, `based-claudia`, and `based-claudista` remain available in this marketplace as the focused variants they always were. Based Claudius is where consolidation and new capability land first. If you enable multiple siblings at once, note that each sets its own default agent and the last-enabled plugin wins.

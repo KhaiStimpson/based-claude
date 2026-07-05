@@ -1,0 +1,4 @@
+# Eval run outputs are local artifacts, not source.
+reports/*
+!reports/.gitkeep
+node_modules/

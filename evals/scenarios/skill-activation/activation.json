@@ -1,0 +1,41 @@
+{
+  "note": "Each row runs a fresh headless session with only based-claudius loaded (bare mode) and records which plugin skills the model invoked via the Skill tool. Hard rows assert a contract and fail the suite; advisory rows measure probabilistic auto-invocation of workflow skills and only surface in the report. Detection reads model-initiated Skill tool_use blocks; user-typed slash commands are expanded pre-model and are out of scope here.",
+  "rows": [
+    {
+      "prompt": "We always use pnpm, never npm, in this repo. Remember that permanently as a durable memory card.",
+      "expect": [],
+      "advisory": false,
+      "why": "The memory skill sets disable-model-invocation: true. The model must NOT auto-invoke it even for a memory-shaped request; durable memory stays user-triggered. A firing here is a real governance regression."
+    },
+    {
+      "prompt": "What is the capital of France?",
+      "expect": [],
+      "advisory": false,
+      "why": "Off-domain prompt. No workflow skill should activate on general knowledge questions."
+    },
+    {
+      "prompt": "Explain in one sentence what a hash map is.",
+      "expect": [],
+      "advisory": false,
+      "why": "Conceptual question with no repository action. Skills should stay quiet."
+    },
+    {
+      "prompt": "Implement a function that reverses a linked list in src/list.js and add a test for it.",
+      "expect": ["work"],
+      "advisory": true,
+      "why": "A concrete implementation request is the router skill's stated trigger. Auto-invocation of a workflow router is probabilistic, so this is advisory: the model may also just implement directly."
+    },
+    {
+      "prompt": "Run the checks on my current changes and tell me if this is ready to merge.",
+      "expect": ["check", "work"],
+      "advisory": true,
+      "why": "Validation/review request maps to the check skill (or the router). Advisory for the same reason."
+    },
+    {
+      "prompt": "Before we touch any code, plan how we would migrate this project from CommonJS to ES modules.",
+      "expect": ["plan", "work"],
+      "advisory": true,
+      "why": "Explicit plan-first request maps to the plan skill. Advisory."
+    }
+  ]
+}

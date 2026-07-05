@@ -1,0 +1,13 @@
+{
+  "name": "based-claudius-evals",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Live behavioral eval suite for the based-claudius plugin: delivered-code quality and skill activation.",
+  "license": "MIT",
+  "scripts": {
+    "eval": "node run.js",
+    "eval:dry": "node run.js --dry-run",
+    "eval:code": "node run.js --family code-quality",
+    "eval:activation": "node run.js --family skill-activation"
+  }
+}

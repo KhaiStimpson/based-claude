@@ -1,0 +1,14 @@
+{
+  "name": "feature-jsdoc",
+  "task": "Add a `roundTo(value, decimals)` function to the money module that rounds a number to the given number of decimal places and is exported alongside the others. Follow the existing code in this module.",
+  "baseline": "tests-pass",
+  "maxTurns": 20,
+  "allowedTools": ["Read", "Glob", "Grep", "Edit", "Write", "Bash"],
+  "gates": {
+    "tests": "node --test",
+    "slopStrict": true,
+    "allowedPaths": ["src/"],
+    "mustChange": ["src/"]
+  },
+  "judge": "judge.md"
+}

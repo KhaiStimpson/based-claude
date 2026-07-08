@@ -1,0 +1,31 @@
+{
+  "name": "based-migrato",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Consolidated Claude Code plugin for production coding: router workflow, artifact state, validation, code-elegance gates, governed memory.",
+  "license": "MIT",
+  "bin": {
+    "migrato-doctor": "bin/migrato-doctor.js",
+    "migrato-quality-gate": "bin/migrato-quality-gate.js",
+    "migrato-slop-check": "bin/migrato-slop-check.js",
+    "migrato-plan": "bin/migrato-plan.js",
+    "migrato-handoff": "bin/migrato-handoff.js",
+    "migrato-memory": "bin/migrato-memory.js",
+    "migrato-trace": "bin/migrato-trace.js",
+    "migrato-improve": "bin/migrato-improve.js",
+    "migrato-plugin-check": "bin/migrato-plugin-check.js"
+  },
+  "scripts": {
+    "check": "node bin/migrato-plugin-check.js",
+    "doctor": "node bin/migrato-doctor.js",
+    "quality-gate": "node bin/migrato-quality-gate.js",
+    "slop-check": "node bin/migrato-slop-check.js",
+    "plan-file": "node bin/migrato-plan.js",
+    "handoff": "node bin/migrato-handoff.js",
+    "memory": "node bin/migrato-memory.js",
+    "trace": "node bin/migrato-trace.js",
+    "improve": "node bin/migrato-improve.js",
+    "scorecard": "node bin/migrato-plugin-check.js --scorecard",
+    "test": "node --test bin"
+  }
+}

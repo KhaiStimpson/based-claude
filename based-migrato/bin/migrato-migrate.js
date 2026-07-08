@@ -126,13 +126,81 @@ function writeFile(target, body, force) {
   return { path: target, skipped: false };
 }
 
+const STATUS_ORDER = ["unmapped", "mapped", "in-slice", "migrated", "verified", "dropped"];
+
+// Parse the parity ledger table: | # | feature | slice | status | assertion | evidence |
+function parseLedger(text) {
+  const rows = [];
+  for (const line of text.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed.startsWith("|")) continue;
+    const cells = trimmed.slice(1, trimmed.endsWith("|") ? -1 : undefined).split("|").map((c) => c.trim());
+    if (cells.length < 4) continue;
+    if (/^-{2,}$/.test(cells[0].replace(/\s/g, "")) || cells.every((c) => /^-*$/.test(c))) continue;
+    if (cells[1].toLowerCase() === "legacy feature" || cells[0] === "#") continue;
+    const status = cells[3].toLowerCase();
+    rows.push({ feature: cells[1], slice: cells[2], status });
+  }
+  return rows;
+}
+
+function summarize(rows) {
+  const counts = {};
+  for (const key of STATUS_ORDER) counts[key] = 0;
+  let other = 0;
+  for (const row of rows) {
+    if (Object.prototype.hasOwnProperty.call(counts, row.status)) counts[row.status] += 1;
+    else other += 1;
+  }
+  const total = rows.length;
+  const done = counts.verified + counts.dropped;
+  return { total, counts, other, done, complete: total > 0 && done === total };
+}
+
+function runStatus(root, args) {
+  const dir = path.resolve(root, args.dir || path.join(".migrato", "migration"));
+  const parityPath = path.join(dir, "parity.md");
+  if (!exists(parityPath)) {
+    console.error(`No parity ledger at ${path.relative(root, parityPath)}. Run: migrato-migrate init --write`);
+    process.exit(1);
+  }
+  const rows = parseLedger(readText(parityPath));
+  const s = summarize(rows);
+
+  if (args.json) {
+    console.log(JSON.stringify({ total: s.total, done: s.done, complete: s.complete, counts: s.counts, other: s.other }, null, 2));
+    return;
+  }
+
+  const pct = s.total ? Math.round((s.done / s.total) * 100) : 0;
+  console.log(`# Migration Parity — ${path.relative(root, parityPath)}`);
+  console.log("");
+  console.log(`Progress: ${s.done}/${s.total} features verified or dropped (${pct}%).`);
+  console.log("");
+  for (const key of STATUS_ORDER) console.log(`- ${key}: ${s.counts[key]}`);
+  if (s.other) console.log(`- other (unrecognized status): ${s.other}`);
+  console.log("");
+  if (s.total === 0) {
+    console.log("Ledger has no feature rows yet. Enumerate the legacy features first.");
+  } else if (s.complete) {
+    console.log("Complete: every feature is verified or dropped.");
+  } else {
+    const remaining = s.total - s.done;
+    console.log(`Not complete: ${remaining} feature(s) still short of verified/dropped. \`migrated\` is not \`verified\` — verify against observed legacy behavior.`);
+  }
+}
+
 function main() {
   const args = parseArgs(process.argv.slice(2));
   const command = args._[0] || "init";
   const root = resolveRoot(args);
 
+  if (command === "status") {
+    runStatus(root, args);
+    return;
+  }
   if (command !== "init") {
-    console.error(`Unknown command '${command}'. Supported: init.`);
+    console.error(`Unknown command '${command}'. Supported: init, status.`);
     process.exit(1);
   }
 

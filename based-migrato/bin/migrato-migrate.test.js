@@ -70,3 +70,42 @@ test("migrato-migrate flags a missing legacy path instead of crashing", () => {
   assert.equal(result.status, 0, result.stderr);
   assert.match(result.stdout, /path not found/);
 });
+
+test("migrato-migrate status counts ledger rows and reports incompleteness", () => {
+  const root = tempRoot();
+  runScript("migrato-migrate.js", [
+    "init", "--write", "--page", "Account",
+    "--rows", "A|s|<A>|verified|x ; B|s|<B>|migrated|y ; C|s||unmapped|gap ; D|s|<D>|dropped|out (ok)",
+    "--root", root,
+  ]);
+  const result = runScript("migrato-migrate.js", ["status", "--root", root]);
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /2\/4 features verified or dropped \(50%\)/);
+  assert.match(result.stdout, /verified: 1/);
+  assert.match(result.stdout, /dropped: 1/);
+  assert.match(result.stdout, /migrated: 1/);
+  assert.match(result.stdout, /unmapped: 1/);
+  assert.match(result.stdout, /Not complete: 2 feature/);
+});
+
+test("migrato-migrate status --json reports complete when all verified or dropped", () => {
+  const root = tempRoot();
+  runScript("migrato-migrate.js", [
+    "init", "--write", "--page", "Account",
+    "--rows", "A|s|<A>|verified|x ; B|s||dropped|out (ok)",
+    "--root", root,
+  ]);
+  const result = runScript("migrato-migrate.js", ["status", "--json", "--root", root]);
+  assert.equal(result.status, 0, result.stderr);
+  const parsed = JSON.parse(result.stdout);
+  assert.equal(parsed.total, 2);
+  assert.equal(parsed.done, 2);
+  assert.equal(parsed.complete, true);
+});
+
+test("migrato-migrate status exits non-zero when the ledger is missing", () => {
+  const root = tempRoot();
+  const result = runScript("migrato-migrate.js", ["status", "--root", root]);
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /No parity ledger/);
+});

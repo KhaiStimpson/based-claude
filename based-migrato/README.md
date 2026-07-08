@@ -87,6 +87,16 @@ These two files live in **your** repository under `.migrato/migration/` and are 
 
 `parity.md` — the living ledger, seeded by the planner and updated as slices land. Statuses run `unmapped → mapped → in-slice → migrated → verified` (plus `dropped` with a recorded reason). The migration is complete only when every row is `verified` or `dropped`; `migrated` means the code exists, `verified` means it behaves like the legacy feature.
 
+Check progress at any point with `migrato-migrate status`, which reads the ledger and reports counts by status and percent complete (`--json` for a machine-readable gate):
+
+```text
+Progress: 1/3 features verified or dropped (33%).
+- unmapped: 1
+- mapped: 1
+- verified: 1
+Not complete: 2 feature(s) still short of verified/dropped.
+```
+
 Full policy — the slice bar, the ledger lifecycle, and the anti-patterns — lives in `references/migration.md`.
 
 ## CLI Helpers
@@ -95,6 +105,7 @@ All helpers resolve through `${CLAUDE_PLUGIN_ROOT}` so they work in any install;
 
 ```bash
 node "${CLAUDE_PLUGIN_ROOT}/bin/migrato-migrate.js" init --write  # scaffold the component map + parity ledger
+node "${CLAUDE_PLUGIN_ROOT}/bin/migrato-migrate.js" status        # parity progress: counts by status, % complete (--json for a gate)
 node "${CLAUDE_PLUGIN_ROOT}/bin/migrato-doctor.js"          # compact project scan
 node "${CLAUDE_PLUGIN_ROOT}/bin/migrato-quality-gate.js"    # list validation candidates (--run to execute)
 node "${CLAUDE_PLUGIN_ROOT}/bin/migrato-slop-check.js" --diff  # mechanical code-style pass

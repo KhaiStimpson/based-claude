@@ -49,6 +49,8 @@ Each row carries a status:
 
 The migration is complete only when every row is `verified` or `dropped`. `migrated` is not `verified`: it means the code exists, not that it behaves like the legacy feature. Never advance a row to `verified` on the strength of the code compiling or a slice merging — advance it only against an observed parity check.
 
+`migrato-migrate status` reads the ledger and reports counts by status and percent complete (`--json` for a gate); use it to check migration progress without hand-counting rows.
+
 The planner proposes ledger and map updates; it does not silently rewrite either file. A human owns `dropped` decisions and unmapped-gap resolutions.
 
 ## File Schemas

@@ -3,21 +3,31 @@ const fs = require("fs");
 const path = require("path");
 const { parseArgs, resolveRoot, walk, exists, readText, ensureDir, today } = require("./_lib");
 
-const SOURCE_EXT = new Set([
-  ".js", ".jsx", ".ts", ".tsx", ".vue", ".svelte", ".php", ".rb", ".py",
-  ".cs", ".java", ".go", ".html", ".htm", ".erb", ".ejs", ".hbs", ".astro",
+// Broad, cross-stack default. Covers WebForms/.NET (aspx, ascx, master, ashx,
+// asmx, cshtml, razor, cs, vb), server templates (php, erb, ejs, hbs), and
+// JS/SPA surfaces. It is only a triage aid for the "Discovered Candidates"
+// list; the real feature enumeration is done by reading the files. Override
+// with --ext (both surfaces) or --component-ext (the "after" surface only)
+// when your stack uses extensions this misses.
+const DEFAULT_SOURCE_EXT = new Set([
+  ".aspx", ".ascx", ".master", ".ashx", ".asmx", ".asax", ".cshtml", ".razor", ".vbhtml",
+  ".cs", ".vb", ".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".vue", ".svelte", ".astro",
+  ".php", ".rb", ".py", ".go", ".java", ".kt", ".html", ".htm", ".erb", ".ejs", ".hbs",
 ]);
 
-// Files in the "after" tree that read as reusable components.
-function isComponentFile(rel) {
-  const ext = path.extname(rel).toLowerCase();
-  const base = path.basename(rel, ext);
-  if ([".vue", ".svelte", ".jsx", ".tsx", ".astro"].includes(ext)) return true;
-  if ([".ts", ".js"].includes(ext) && /^[A-Z][A-Za-z0-9]*$/.test(base)) return true;
-  return false;
+function parseExtSet(value, fallback) {
+  if (!value || value === true) return fallback;
+  const set = new Set(
+    String(value)
+      .split(",")
+      .map((e) => e.trim().toLowerCase())
+      .filter(Boolean)
+      .map((e) => (e.startsWith(".") ? e : `.${e}`))
+  );
+  return set.size ? set : fallback;
 }
 
-function scanSurfaces(root, dirs, filter, cap) {
+function scanSurfaces(root, dirs, exts, cap) {
   const out = [];
   for (const dir of dirs) {
     const abs = path.resolve(root, dir);
@@ -26,8 +36,7 @@ function scanSurfaces(root, dirs, filter, cap) {
       continue;
     }
     const files = walk(abs, { maxFiles: 4000, maxDepth: 6 })
-      .filter((rel) => SOURCE_EXT.has(path.extname(rel).toLowerCase()))
-      .filter(filter)
+      .filter((rel) => exts.has(path.extname(rel).toLowerCase()))
       .map((rel) => `${dir.replace(/\/+$/, "")}/${rel}`)
       .sort();
     out.push({ dir, missing: false, files: files.slice(0, cap) });
@@ -95,9 +104,9 @@ ${bodyRows.join("\n")}
 
 ${commentList(legacySurfaces, "no source files found in the scan window.")}
 
-### New components (after)
+### New surfaces (after)
 
-${commentList(newSurfaces, "no component-like files found in the scan window.")}
+${commentList(newSurfaces, "no source files found in the scan window.")}
 `;
 }
 
@@ -210,8 +219,10 @@ function main() {
   const rows = parseRows(args.rows);
   const dir = path.resolve(root, args.dir || path.join(".migrato", "migration"));
 
-  const legacySurfaces = scanSurfaces(root, legacyPaths, () => true, 40);
-  const newSurfaces = scanSurfaces(root, newPaths, isComponentFile, 40);
+  const sourceExts = parseExtSet(args.ext, DEFAULT_SOURCE_EXT);
+  const componentExts = args["component-ext"] ? parseExtSet(args["component-ext"], DEFAULT_SOURCE_EXT) : sourceExts;
+  const legacySurfaces = scanSurfaces(root, legacyPaths, sourceExts, 40);
+  const newSurfaces = scanSurfaces(root, newPaths, componentExts, 40);
 
   const componentMap = renderComponentMap({ page, legacyPaths, newPaths, rows, legacySurfaces, newSurfaces });
   const parity = renderParity({ page, legacyPaths, rows });

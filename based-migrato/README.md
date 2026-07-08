@@ -104,7 +104,7 @@ Full policy — the slice bar, the ledger lifecycle, and the anti-patterns — l
 All helpers resolve through `${CLAUDE_PLUGIN_ROOT}` so they work in any install; on current Claude Code versions the `bin/` shims are also on PATH.
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/bin/migrato-migrate.js" init --write  # scaffold the component map + parity ledger
+node "${CLAUDE_PLUGIN_ROOT}/bin/migrato-migrate.js" init --write  # scaffold the component map + parity ledger (--ext to tune the scan to your stack)
 node "${CLAUDE_PLUGIN_ROOT}/bin/migrato-migrate.js" status        # parity progress: counts by status, % complete (--json for a gate)
 node "${CLAUDE_PLUGIN_ROOT}/bin/migrato-doctor.js"          # compact project scan
 node "${CLAUDE_PLUGIN_ROOT}/bin/migrato-quality-gate.js"    # list validation candidates (--run to execute)

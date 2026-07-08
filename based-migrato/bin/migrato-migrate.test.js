@@ -39,10 +39,10 @@ test("migrato-migrate --write creates map + ledger, scans surfaces, and seeds ro
   // seeded rows land in the table
   assert.match(map, /Save profile .*<ProfileForm>.* mapped/);
   assert.match(map, /Avatar upload .* unmapped/);
-  // discovered candidates: legacy files listed, only component-like new files listed
+  // discovered candidates: both surfaces listed as a plain source inventory
   assert.match(map, /legacy\/profile\.js/);
   assert.match(map, /ProfileForm\.tsx/);
-  assert.ok(!map.includes("helpers.ts"), "non-component new files should not be listed as components");
+  assert.match(map, /helpers\.ts/);
   // parity ledger seeded and numbered from the same rows
   assert.match(parity, /\| 1 \| Save profile \| — \| mapped \|/);
   assert.match(parity, /\| 2 \| Avatar upload \| — \| unmapped \|/);
@@ -62,6 +62,43 @@ test("migrato-migrate does not overwrite an existing non-empty map without --for
   const forced = runScript("migrato-migrate.js", ["init", "--write", "--force", "--page", "Account", "--root", root]);
   assert.equal(forced.status, 0, forced.stderr);
   assert.match(fs.readFileSync(path.join(dir, "component-map.md"), "utf8"), /Component Map — Account/);
+});
+
+test("migrato-migrate discovers WebForms and .NET surfaces by default", () => {
+  const root = tempRoot();
+  fs.mkdirSync(path.join(root, "webforms/Controls"), { recursive: true });
+  fs.mkdirSync(path.join(root, "net8/Pages"), { recursive: true });
+  fs.writeFileSync(path.join(root, "webforms/Account.aspx"), "<%@ Page %>", "utf8");
+  fs.writeFileSync(path.join(root, "webforms/Account.aspx.cs"), "// codebehind", "utf8");
+  fs.writeFileSync(path.join(root, "webforms/Controls/AvatarCtrl.ascx"), "<%@ Control %>", "utf8");
+  fs.writeFileSync(path.join(root, "net8/Pages/Account.cshtml"), "@page", "utf8");
+  fs.writeFileSync(path.join(root, "net8/Pages/Account.razor"), "@page", "utf8");
+  const result = runScript("migrato-migrate.js", ["init", "--page", "Account", "--legacy", "webforms", "--new", "net8", "--root", root]);
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, /webforms\/Account\.aspx/);
+  assert.match(result.stdout, /webforms\/Account\.aspx\.cs/);
+  assert.match(result.stdout, /webforms\/Controls\/AvatarCtrl\.ascx/);
+  assert.match(result.stdout, /net8\/Pages\/Account\.cshtml/);
+  assert.match(result.stdout, /net8\/Pages\/Account\.razor/);
+});
+
+test("migrato-migrate --ext narrows the scan and --component-ext narrows only the after side", () => {
+  const root = tempRoot();
+  fs.mkdirSync(path.join(root, "legacy"), { recursive: true });
+  fs.mkdirSync(path.join(root, "new"), { recursive: true });
+  fs.writeFileSync(path.join(root, "legacy/page.aspx"), "x", "utf8");
+  fs.writeFileSync(path.join(root, "legacy/notes.txt"), "x", "utf8");
+  fs.writeFileSync(path.join(root, "new/View.razor"), "x", "utf8");
+  fs.writeFileSync(path.join(root, "new/helper.cs"), "x", "utf8");
+  // --ext excludes .txt (not that it was included) and restricts to aspx/razor/cs
+  const both = runScript("migrato-migrate.js", ["init", "--legacy", "legacy", "--new", "new", "--ext", "aspx,razor,cs", "--root", root]);
+  assert.match(both.stdout, /legacy\/page\.aspx/);
+  assert.match(both.stdout, /new\/helper\.cs/);
+  // component-ext restricts only the after surface to razor
+  const narrowed = runScript("migrato-migrate.js", ["init", "--legacy", "legacy", "--new", "new", "--ext", "aspx,razor,cs", "--component-ext", "razor", "--root", root]);
+  assert.match(narrowed.stdout, /new\/View\.razor/);
+  const afterSection = narrowed.stdout.split("New surfaces (after)")[1] || "";
+  assert.ok(!afterSection.includes("helper.cs"), "after surface should be narrowed to .razor only");
 });
 
 test("migrato-migrate flags a missing legacy path instead of crashing", () => {

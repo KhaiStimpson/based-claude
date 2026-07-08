@@ -7,8 +7,8 @@ const { parseArgs, resolveRoot, walk, exists, readText, ensureDir, today } = req
 // asmx, cshtml, razor, cs, vb), server templates (php, erb, ejs, hbs), and
 // JS/SPA surfaces. It is only a triage aid for the "Discovered Candidates"
 // list; the real feature enumeration is done by reading the files. Override
-// with --ext (both surfaces) or --component-ext (the "after" surface only)
-// when your stack uses extensions this misses.
+// with --ext (both surfaces), --component-ext, or --component-glob (the
+// "after" surface only) when your stack needs it.
 const DEFAULT_SOURCE_EXT = new Set([
   ".aspx", ".ascx", ".master", ".ashx", ".asmx", ".asax", ".cshtml", ".razor", ".vbhtml",
   ".cs", ".vb", ".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".vue", ".svelte", ".astro",
@@ -27,7 +27,51 @@ function parseExtSet(value, fallback) {
   return set.size ? set : fallback;
 }
 
-function scanSurfaces(root, dirs, exts, cap) {
+function csvList(value) {
+  if (!value || value === true) return [];
+  return String(value).split(",").map((v) => v.trim()).filter(Boolean);
+}
+
+// Minimal glob: `**` crosses directories, `*` and `?` stay within a segment.
+// Lets the "after" scan target partial views (**/_*.cshtml) and tag helpers
+// (*TagHelper.cs) that plain extensions cannot separate from pages/controllers.
+function globToRegExp(glob) {
+  const chars = glob.trim().split("");
+  let out = "";
+  for (let i = 0; i < chars.length; i += 1) {
+    const c = chars[i];
+    if (c === "*" && chars[i + 1] === "*") {
+      i += 1;
+      if (chars[i + 1] === "/") {
+        i += 1;
+        out += "(?:.*/)?"; // **/ matches zero or more leading directories
+      } else {
+        out += ".*"; // ** crosses directory boundaries
+      }
+    } else if (c === "*") {
+      out += "[^/]*"; // * stays within a path segment
+    } else if (c === "?") {
+      out += "[^/]";
+    } else if (/[.+^${}()|[\]\\]/.test(c)) {
+      out += `\\${c}`;
+    } else {
+      out += c;
+    }
+  }
+  return new RegExp(`^${out}$`);
+}
+
+// A pattern with no `/` matches the basename; otherwise the dir-relative path.
+function globPredicate(patterns) {
+  const compiled = patterns.map((p) => ({ re: globToRegExp(p), basename: !p.includes("/") }));
+  return (rel) => compiled.some(({ re, basename }) => re.test(basename ? path.basename(rel) : rel));
+}
+
+function extPredicate(exts) {
+  return (rel) => exts.has(path.extname(rel).toLowerCase());
+}
+
+function scanSurfaces(root, dirs, predicate, cap) {
   const out = [];
   for (const dir of dirs) {
     const abs = path.resolve(root, dir);
@@ -36,7 +80,7 @@ function scanSurfaces(root, dirs, exts, cap) {
       continue;
     }
     const files = walk(abs, { maxFiles: 4000, maxDepth: 6 })
-      .filter((rel) => exts.has(path.extname(rel).toLowerCase()))
+      .filter(predicate)
       .map((rel) => `${dir.replace(/\/+$/, "")}/${rel}`)
       .sort();
     out.push({ dir, missing: false, files: files.slice(0, cap) });
@@ -92,6 +136,7 @@ function renderComponentMap({ page, legacyPaths, newPaths, rows, legacySurfaces,
 <!-- Legacy (before): ${legacyPaths.join(", ") || "unspecified"} -->
 <!-- New (after): ${newPaths.join(", ") || "unspecified"} -->
 <!-- Human-maintained. Anyone can add or correct a row. -->
+<!-- One new component (a partial view or tag helper) can satisfy several legacy features; that shows up as several rows pointing at the same component. -->
 <!-- Status: unmapped | mapped | migrated | verified | dropped (dropped needs an approved reason). -->
 
 | Legacy feature | Legacy source | New component | Status | Notes |
@@ -106,7 +151,7 @@ ${commentList(legacySurfaces, "no source files found in the scan window.")}
 
 ### New surfaces (after)
 
-${commentList(newSurfaces, "no source files found in the scan window.")}
+${commentList(newSurfaces, "no matching files found in the scan window.")}
 `;
 }
 
@@ -199,6 +244,12 @@ function runStatus(root, args) {
   }
 }
 
+function afterPredicate(args, sourceExts) {
+  if (args["component-glob"]) return globPredicate(csvList(args["component-glob"]));
+  if (args["component-ext"]) return extPredicate(parseExtSet(args["component-ext"], DEFAULT_SOURCE_EXT));
+  return extPredicate(sourceExts);
+}
+
 function main() {
   const args = parseArgs(process.argv.slice(2));
   const command = args._[0] || "init";
@@ -214,15 +265,14 @@ function main() {
   }
 
   const page = String(args.page || args.title || "the page").replace(/\s+/g, " ").trim();
-  const legacyPaths = csvPaths(args.legacy);
-  const newPaths = csvPaths(args.new);
+  const legacyPaths = csvList(args.legacy);
+  const newPaths = csvList(args.new);
   const rows = parseRows(args.rows);
   const dir = path.resolve(root, args.dir || path.join(".migrato", "migration"));
 
   const sourceExts = parseExtSet(args.ext, DEFAULT_SOURCE_EXT);
-  const componentExts = args["component-ext"] ? parseExtSet(args["component-ext"], DEFAULT_SOURCE_EXT) : sourceExts;
-  const legacySurfaces = scanSurfaces(root, legacyPaths, sourceExts, 40);
-  const newSurfaces = scanSurfaces(root, newPaths, componentExts, 40);
+  const legacySurfaces = scanSurfaces(root, legacyPaths, extPredicate(sourceExts), 40);
+  const newSurfaces = scanSurfaces(root, newPaths, afterPredicate(args, sourceExts), 40);
 
   const componentMap = renderComponentMap({ page, legacyPaths, newPaths, rows, legacySurfaces, newSurfaces });
   const parity = renderParity({ page, legacyPaths, rows });
@@ -242,11 +292,6 @@ function main() {
   if (results.some((r) => r.skipped)) {
     console.log("Re-run with --force to overwrite existing files.");
   }
-}
-
-function csvPaths(value) {
-  if (!value || value === true) return [];
-  return String(value).split(",").map((v) => v.trim()).filter(Boolean);
 }
 
 main();

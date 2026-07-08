@@ -20,8 +20,8 @@ Stand up the two human-maintained migration registries so `/based-migrato:plan` 
    - **After (new) folders** to search — where the replacement lives.
    - **Stacks** — the before and after tech (e.g. WebForms + jQuery → .NET 8 + Razor). This tells you what a "feature" and a "component" mean here and which file extensions matter; a "new component" may be a Razor partial, a view component, an API endpoint, or a JS module, not just a SPA component.
    - **Example mappings** — a few known legacy-feature → new pairs to anchor the pattern. Optional but valuable.
-2. Scan both surfaces with the repo tools (Glob/Grep), richer than a raw file list: in the legacy folders enumerate user-facing features, postbacks, event handlers, and behaviors; in the new folders enumerate what is available to map onto. Read the examples the user gave to calibrate. The helper's file scan below is only a triage aid — this semantic enumeration is the real work.
-3. Propose component-map rows: for each legacy feature, suggest a new mapping only when the after-surface plus the examples make it clear; otherwise mark it `unmapped` and note the gap. Never invent a confident mapping, and never silently drop a feature. Surface the proposed rows to the user before writing.
+2. Scan both surfaces with the repo tools (Glob/Grep), richer than a raw file list: in the legacy folders enumerate user-facing features, postbacks, event handlers, and behaviors; in the new folders enumerate what is available to map onto. For a .NET target the reusable "new component" units are usually **partial views** (`_*.cshtml`, often under `Shared/` or `Partials/`) and **custom tag helpers** (`class ... : TagHelper`, `[HtmlTargetElement(...)]`, used in markup as custom elements) — grep for those signals, not just file extensions. Read the examples the user gave to calibrate. The helper's file scan below is only a triage aid; this semantic enumeration is the real work.
+3. Propose component-map rows: for each legacy feature, suggest a new mapping only when the after-surface plus the examples make it clear; otherwise mark it `unmapped` and note the gap. A reusable partial or tag helper often satisfies the same feature across several pages — that is one component appearing in several rows, which is expected. Never invent a confident mapping, and never silently drop a feature. Surface the proposed rows to the user before writing.
 4. Write the files:
 
    ```bash
@@ -30,7 +30,12 @@ Stand up the two human-maintained migration registries so `/based-migrato:plan` 
      --rows "feature|legacy source|new component|status|notes ; ..."
    ```
 
-   The default scan covers common WebForms/.NET, server-template, and JS extensions. If your stack uses extensions it misses, pass `--ext "aspx,ascx,master,cs,cshtml,razor,js"` (applies to both surfaces) or `--component-ext "razor,cshtml"` (narrows only the after surface). The helper is idempotent — it will not overwrite an existing non-empty map or ledger without `--force`. It lists discovered files under a "Discovered Candidates" section for triage. Drop `--write` to preview.
+   The default scan covers common WebForms/.NET, server-template, and JS extensions. Tune it to your stack:
+   - `--ext "aspx,ascx,master,cs,cshtml,razor,js"` — extensions for both surfaces.
+   - `--component-ext "razor,cshtml"` — extensions for the after surface only.
+   - `--component-glob "**/_*.cshtml,**/*TagHelper.cs"` — the after surface only, by glob, to isolate partial views and tag helpers from ordinary pages and controllers (`**` crosses directories; a pattern with no `/` matches the basename).
+
+   The helper is idempotent — it will not overwrite an existing non-empty map or ledger without `--force`. It lists discovered files under a "Discovered Candidates" section for triage. Drop `--write` to preview.
 5. Seed `parity.md` from the same feature enumeration (the helper does this from `--rows`); the migration is complete only when every parity row is `verified` or `dropped`.
 6. Report mapped vs. unmapped counts and hand off to `/based-migrato:plan` to slice the page.
 

@@ -72,18 +72,21 @@ The planner will:
 
 These two files live in **your** repository under `.migrato/migration/` and are edited by whoever runs the migration — the plugin ships only their schema and these examples, never a project's real mappings. Anyone can add or correct a row.
 
-`component-map.md` — legacy feature → new component registry:
+`component-map.md` — legacy feature → new component registry. The "New component" column is freeform, so a target can be a partial view, a tag helper, a view component, an API endpoint, a JS module, or a combination — and a reusable partial/tag helper can appear in several rows when it satisfies a feature across pages:
 
 ```markdown
 # Component Map — Account Settings
 
 | Legacy feature | Legacy source | New component | Status | Notes |
 | --- | --- | --- | --- | --- |
-| Save profile | legacy/profile.js | <ProfileForm> | migrated | slice 1 |
-| Avatar upload | legacy/avatar.js | — | unmapped | no new component yet; gap |
-| "Saved" toast | jquery flashMsg | <Toast> | verified | slice 1 |
+| Save profile postback | AccountSettings.aspx.cs Save_Click | _ProfileForm.cshtml + ProfileController.Save | migrated | slice 1 |
+| Avatar upload control | Controls/AvatarUpload.ascx | <avatar-upload> (AvatarUploadTagHelper) | migrated | shared tag helper |
+| Field validation | jQuery validate | <validation-summary> tag helper | verified | slice 1 |
+| Inline help tooltips | legacy/help.js | — | unmapped | no tag helper yet; gap |
 | Print stylesheet | print.css | — | dropped | out of scope (approved: KS) |
 ```
+
+Tune the discovery scan to your stack: `--ext` for both surfaces, or `--component-ext` / `--component-glob "**/_*.cshtml,**/*TagHelper.cs"` to isolate partial views and tag helpers on the after surface.
 
 `parity.md` — the living ledger, seeded by the planner and updated as slices land. Statuses run `unmapped → mapped → in-slice → migrated → verified` (plus `dropped` with a recorded reason). The migration is complete only when every row is `verified` or `dropped`; `migrated` means the code exists, `verified` means it behaves like the legacy feature.
 

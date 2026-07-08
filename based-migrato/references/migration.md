@@ -57,17 +57,17 @@ The planner proposes ledger and map updates; it does not silently rewrite either
 
 ### `component-map.md`
 
-A human-editable markdown table. Anyone on the migration can add or correct a row.
+A human-editable markdown table. Anyone on the migration can add or correct a row. The "New component" column is freeform: name whatever the target actually is — a partial view, a tag helper, a view component, an API endpoint, a JS module, or a combination. A reusable partial or tag helper often satisfies the same feature on several pages; that is one component appearing in several rows, which is expected and is how the parity ledger tracks shared reuse.
 
 ```markdown
-# Component Map — <page name>
+# Component Map — Account Settings
 
 | Legacy feature | Legacy source | New component | Status | Notes |
 | --- | --- | --- | --- | --- |
-| Results table sort | LegacyGrid.sortBy | <DataTable sortable> | mapped | server-side sort, keep default column |
-| Inline row edit | legacy/edit.js | — | unmapped | no new component yet; gap |
-| CSV export | ExportButton | <ExportMenu format="csv"> | migrated | slice 2 |
-| Flash "saved" toast | jquery flashMsg | replaced by <Toast> | verified | slice 1 |
+| Save profile postback | AccountSettings.aspx.cs Save_Click | _ProfileForm.cshtml partial + ProfileController.Save | mapped | slice 1 |
+| Avatar upload control | Controls/AvatarUpload.ascx | <avatar-upload> (AvatarUploadTagHelper) | migrated | shared tag helper, reused on Profile page too |
+| Field validation summary | jQuery validate + ValidationSummary | <validation-summary> tag helper | verified | slice 1 |
+| Inline field help tooltips | legacy/help.js | — | unmapped | no tag helper yet; gap |
 | Print stylesheet | print.css | — | dropped | product decided out of scope (approved: KS) |
 ```
 

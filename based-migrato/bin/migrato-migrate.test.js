@@ -101,6 +101,28 @@ test("migrato-migrate --ext narrows the scan and --component-ext narrows only th
   assert.ok(!afterSection.includes("helper.cs"), "after surface should be narrowed to .razor only");
 });
 
+test("migrato-migrate --component-glob targets partial views and tag helpers", () => {
+  const root = tempRoot();
+  fs.mkdirSync(path.join(root, "src/Pages/Shared"), { recursive: true });
+  fs.mkdirSync(path.join(root, "src/TagHelpers"), { recursive: true });
+  fs.mkdirSync(path.join(root, "src/Controllers"), { recursive: true });
+  fs.writeFileSync(path.join(root, "src/Pages/Account.cshtml"), "@page", "utf8");            // page, excluded
+  fs.writeFileSync(path.join(root, "src/Pages/Shared/_AvatarUpload.cshtml"), "partial", "utf8"); // partial, included
+  fs.writeFileSync(path.join(root, "src/TagHelpers/AvatarTagHelper.cs"), "class", "utf8");   // tag helper, included
+  fs.writeFileSync(path.join(root, "src/Controllers/AccountController.cs"), "class", "utf8"); // controller, excluded
+  const result = runScript("migrato-migrate.js", [
+    "init", "--page", "Account", "--new", "src",
+    "--component-glob", "**/_*.cshtml,**/*TagHelper.cs",
+    "--root", root,
+  ]);
+  assert.equal(result.status, 0, result.stderr);
+  const after = result.stdout.split("New surfaces (after)")[1] || "";
+  assert.match(after, /_AvatarUpload\.cshtml/);
+  assert.match(after, /AvatarTagHelper\.cs/);
+  assert.ok(!after.includes("Pages/Account.cshtml"), "plain pages should be excluded");
+  assert.ok(!after.includes("AccountController.cs"), "controllers should be excluded");
+});
+
 test("migrato-migrate flags a missing legacy path instead of crashing", () => {
   const root = tempRoot();
   const result = runScript("migrato-migrate.js", ["init", "--page", "X", "--legacy", "does/not/exist", "--root", root]);

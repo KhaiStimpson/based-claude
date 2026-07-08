@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "based-migrato",
+  "displayName": "Based Migrato",
+  "version": "0.1.0",
+  "description": "Migration-first Based workflow: a planner that decomposes a legacy page into horizontal, individually testable slices and tracks legacy-to-new feature parity, on the full Claudius router, validation, review, memory, and safety spine.",
+  "author": {
+    "name": "MAS Research Knowledgebase"
+  },
+  "license": "MIT",
+  "keywords": [
+    "coding-agents",
+    "legacy-migration",
+    "feature-parity",
+    "production-engineering",
+    "code-quality",
+    "validation",
+    "agent-memory",
+    "claude-code"
+  ],
+  "defaultEnabled": true
+}

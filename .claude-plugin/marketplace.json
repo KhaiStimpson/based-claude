@@ -11,6 +11,11 @@
       "description": "The consolidated Based flagship: one router entrypoint, artifact-backed state, deterministic validation, code-elegance review gates, governed memory, and gated self-improvement."
     },
     {
+      "name": "based-migrato",
+      "source": "./based-migrato",
+      "description": "Migration-first Based workflow: a planner that decomposes a legacy page into horizontal, individually testable slices and tracks legacy-to-new feature parity, on the full Claudius router, validation, review, memory, and safety spine."
+    },
+    {
       "name": "based-claude",
       "source": "./based-claude",
       "description": "Research-grounded Claude Code workflow for production software work: disciplined context loading, scoped implementation, validation, review, safety, memory, and handoff."

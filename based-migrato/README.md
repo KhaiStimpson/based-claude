@@ -18,7 +18,7 @@ The plugin intentionally avoids always-on hooks, monitors, MCP servers, and auto
 
 ## Components
 
-- `skills/` provide slash commands: `/based-migrato:work` (router), `/based-migrato:start`, `/based-migrato:plan`, `/based-migrato:check`, `/based-migrato:memory`, `/based-migrato:improve`, and `/based-migrato:handoff`.
+- `skills/` provide slash commands: `/based-migrato:work` (router), `/based-migrato:start`, `/based-migrato:init` (bootstrap the component map + parity ledger), `/based-migrato:plan`, `/based-migrato:check`, `/based-migrato:memory`, `/based-migrato:improve`, and `/based-migrato:handoff`.
 - `agents/` provide the owner plus focused subagents: `migrato-developer` (default), `migrato-scout` (haiku), `migrato-planner` (opus), `migrato-repairer`, `migrato-validator`, `migrato-reviewer`, `migrato-safety`, `migrato-memory`, `migrato-improver`. Agents are thin role deltas over the canonical references — policy lives in one place.
 - `references/` store the canonical contracts: **migration** (slice bar, parity ledger, file schemas), system contract, research basis, code style, delegation policy, validation ladder, review policy, safety policy, memory schema, trace schema, model contract, planning, diagnostic ledger, self-improvement, loop readiness, tool-adapter safety, phase gates, and the handoff template.
 - `bin/` provides no-dependency Node helpers Claude runs from the Bash tool while the plugin is enabled.
@@ -49,7 +49,13 @@ Then run `/reload-plugins` after edits and try `/based-migrato:start`. For share
 
 ## Migration Workflow
 
-Point the planner at a legacy page:
+First, bootstrap the registries for the page — `/based-migrato:init` interviews you for the page name, the **before** (legacy) and **after** (new) folders to search, and a few example mappings, then scans both surfaces and writes the component map and parity ledger:
+
+```text
+/based-migrato:init set up the component map for the account settings page
+```
+
+Then point the planner at the page:
 
 ```text
 /based-migrato:plan migrate the account settings page to the new component library
@@ -88,6 +94,7 @@ Full policy — the slice bar, the ledger lifecycle, and the anti-patterns — l
 All helpers resolve through `${CLAUDE_PLUGIN_ROOT}` so they work in any install; on current Claude Code versions the `bin/` shims are also on PATH.
 
 ```bash
+node "${CLAUDE_PLUGIN_ROOT}/bin/migrato-migrate.js" init --write  # scaffold the component map + parity ledger
 node "${CLAUDE_PLUGIN_ROOT}/bin/migrato-doctor.js"          # compact project scan
 node "${CLAUDE_PLUGIN_ROOT}/bin/migrato-quality-gate.js"    # list validation candidates (--run to execute)
 node "${CLAUDE_PLUGIN_ROOT}/bin/migrato-slop-check.js" --diff  # mechanical code-style pass

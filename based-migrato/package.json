@@ -2,10 +2,11 @@
   "name": "based-migrato",
   "version": "0.1.0",
   "private": true,
-  "description": "Consolidated Claude Code plugin for production coding: router workflow, artifact state, validation, code-elegance gates, governed memory.",
+  "description": "Migration-first Claude Code plugin: horizontal-slice migration planning with feature-parity tracking, on the Claudius router, validation, review, memory, and safety spine.",
   "license": "MIT",
   "bin": {
     "migrato-doctor": "bin/migrato-doctor.js",
+    "migrato-migrate": "bin/migrato-migrate.js",
     "migrato-quality-gate": "bin/migrato-quality-gate.js",
     "migrato-slop-check": "bin/migrato-slop-check.js",
     "migrato-plan": "bin/migrato-plan.js",
@@ -18,6 +19,7 @@
   "scripts": {
     "check": "node bin/migrato-plugin-check.js",
     "doctor": "node bin/migrato-doctor.js",
+    "migrate": "node bin/migrato-migrate.js",
     "quality-gate": "node bin/migrato-quality-gate.js",
     "slop-check": "node bin/migrato-slop-check.js",
     "plan-file": "node bin/migrato-plan.js",
